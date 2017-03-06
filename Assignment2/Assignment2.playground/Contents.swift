@@ -187,7 +187,7 @@ func map2<T>(_ rows: Int, _ cols: Int, transform: (Int, Int) -> T) -> [[T]] {
 */
 // ** Your Problem 5 comment goes here! **
 /*
- It represnts the set of Position offsets required to determine the Positions the neighboring cells from the Position of the current cell.
+ It represents the set of Position offsets required to determine the Positions the neighboring cells from the Position of the current cell.
  */
 /*:
  ## Problem 6:
@@ -396,7 +396,7 @@ grid.numLiving
 
 // ** Your Problem 13 comment goes here! **
 /*
-Each cell is independently and randomly assigned either alive or empty.
+Each cell is independently and randomly assigned either alive or empty and thus there is no guarentee that exactly 33 will be assigned alive.
  */
 /*:
  ## Problem 14:
@@ -450,14 +450,14 @@ extension Grid {
  */
 // Problem 15.2 answer goes here
 /*
-self[row,col] is an Optinal Cell
+self[row,col] is an Optional Cell
  */
 /*:
  3. why those two types are different?
  */
 // Problem 15.3 comment goes here
 /*
- self[row, col] is an optinal and thus can take the value of nil whereas cell can not.
+ self[row, col] is an optional and thus can take the value of nil whereas cell can not.
  */
 /*:
  4. under what circumstances will the `else` clause will be executed?
@@ -521,8 +521,6 @@ extension Grid {
     }
 }
 
-let g = Grid(10,10)
-g.livingNeighbors(of: g[0,0]!)
 /*:
  ## Problem 19:
  In the extension to `Grid` shown below, implement a function nextState which:
