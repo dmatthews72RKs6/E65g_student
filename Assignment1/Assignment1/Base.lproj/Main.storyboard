@@ -87,17 +87,17 @@
                                         <rect key="frame" x="0.0" y="0.0" width="1024" height="648.5"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Generation" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BSK-MB-mTc">
-                                                <rect key="frame" x="10" y="10" width="1004" height="66"/>
+                                                <rect key="frame" x="10" y="10" width="1004" height="65"/>
                                                 <color key="backgroundColor" red="0.52123181709999999" green="0.99835759400000001" blue="0.93940906700000004" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gAf-40-ILx" userLabel="Buttons, sliders">
-                                                <rect key="frame" x="0.0" y="76" width="512" height="572.5"/>
+                                                <rect key="frame" x="0.0" y="75" width="512" height="573.5"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Xz-Gz-Z0d" userLabel="Grid Size">
-                                                        <rect key="frame" x="0.0" y="0.0" width="512" height="285.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="512" height="286"/>
                                                         <subviews>
                                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="NiZ-5A-XIC">
                                                                 <rect key="frame" x="8" y="127.5" width="496" height="31"/>
@@ -119,7 +119,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8xt-cT-GwO" userLabel="Frames / Second">
-                                                        <rect key="frame" x="0.0" y="285.5" width="512" height="287"/>
+                                                        <rect key="frame" x="0.0" y="286" width="512" height="287.5"/>
                                                         <subviews>
                                                             <slider opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="wYa-mK-cP1">
                                                                 <rect key="frame" x="8" y="128.5" width="496" height="31"/>
@@ -154,7 +154,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1om-pu-UXH">
-                                                <rect key="frame" x="512" y="76" width="512" height="572.5"/>
+                                                <rect key="frame" x="512" y="75" width="512" height="573.5"/>
                                                 <state key="normal" title="Reset"/>
                                             </button>
                                         </subviews>
@@ -197,6 +197,9 @@
                                     <constraint firstItem="WXx-yq-XB5" firstAttribute="height" secondItem="upE-Kv-gZb" secondAttribute="height" id="shv-oP-yhA"/>
                                 </constraints>
                                 <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="g6l-Ck-8vY"/>
+                                    </mask>
                                     <mask key="constraints">
                                         <exclude reference="7Az-ct-gHm"/>
                                         <exclude reference="HSc-f0-QRU"/>
