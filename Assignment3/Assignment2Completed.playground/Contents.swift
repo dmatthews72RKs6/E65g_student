@@ -98,18 +98,45 @@ typealias Position = (row: Int, col: Int)
  
  Failure to follow all rules will result in zero credit.
 */
-enum CellState {
-    // ** Your Problem 2 code goes here! Replace the contents of CellState **
-    //  This shell code is here so that at all times the playground compiles and runs
-    case alive, empty, born, died
+public enum CellState: String {
+    case alive = "alive", empty = "empty", born = "born", died
     
-    var isAlive: Bool {
+    public var isAlive: Bool {
         switch self {
         case .alive, .born: return true
         default: return false
         }
     }
+    
+    public var description: String {
+        switch self {
+        case .alive, .empty, .born, .died: return rawValue
+        
+        }
+    }
+    public func toggle(value: CellState) -> CellState {
+        switch value {
+        case .empty, .died: return .alive
+        case .alive, .born: return .empty
+        }
+    }
+
+    
 }
+
+
+var c = CellState.empty
+let d = CellState.died
+
+c.description
+d.description
+
+c = c.toggle(value: c)
+
+c = c.toggle(value: c)
+c
+
+
 /*:
  ## Problem 3:
  In the struct Cell below:
