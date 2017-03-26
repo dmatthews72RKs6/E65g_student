@@ -51,8 +51,23 @@ import UIKit
         }
 
         // draw the circles
-        
-        drawCircle(origin: CGPoint(x: 0, y: 0), size: cellSize, color: UIColor.brown)
+        grid.positions.forEach{ p in
+            let color: UIColor
+            
+            switch grid[p].description {
+                case "alive": color = livingColor
+                case "empty": color = emptyColor
+                case "born": color = bornColor
+                case "died": color = diedColor
+            default: color = UIColor.black
+            }
+            
+            drawCircle(
+                origin: CGPoint(x: cellSize.width * CGFloat(p.col), y: cellSize.height * CGFloat(p.row)),
+                size: cellSize,
+                color: color
+            )
+        }
         
     }
     
