@@ -12,18 +12,23 @@ import UIKit
 
     @IBInspectable var size = 20 {
         didSet{
-            grid = Grid.init(size, size) { _,_ in .empty }
+            grid = Grid(size, size) {_,_ in .empty}
         }
     }
     @IBInspectable var livingColor = UIColor.green
     @IBInspectable var emptyColor = UIColor.lightGray
     @IBInspectable var bornColor = UIColor.cyan
     @IBInspectable var diedColor = UIColor.black
+    @IBInspectable var gridColor = UIColor.black
     @IBInspectable var gridWidth: CGFloat = 2.0
     
     var grid = Grid.init(0, 0)
     
-    
+    public func nextGrid() {
+        grid = grid.next()
+        setNeedsDisplay()
+        
+    }
     
     
 
@@ -32,24 +37,7 @@ import UIKit
             width: rect.size.width / CGFloat(size),
             height: rect.size.height / CGFloat(size)
         )
-
         
-        // draw the grid
-        
-        (0...size).forEach {
-            // horizontal
-            drawLine(
-                start:  CGPoint(x: 0.0, y: CGFloat($0)/CGFloat(size) * rect.size.height),
-                end:    CGPoint(x: rect.size.width, y: CGFloat($0)/CGFloat(size) * rect.size.height)
-            )
-            
-            // verticle
-            drawLine(
-                start:  CGPoint(x: CGFloat($0)/CGFloat(size) * rect.size.width, y: 0.0),
-                end:    CGPoint(x: CGFloat($0)/CGFloat(size) * rect.size.width, y: rect.size.height)
-            )
-        }
-
         // draw the circles
         grid.positions.forEach{ p in
             let color: UIColor
@@ -69,6 +57,23 @@ import UIKit
             )
         }
         
+        // draw the grid
+        
+        (0...size).forEach {
+            // horizontal
+            drawLine(
+                start:  CGPoint(x: 0.0, y: CGFloat($0)/CGFloat(size) * rect.size.height),
+                end:    CGPoint(x: rect.size.width, y: CGFloat($0)/CGFloat(size) * rect.size.height)
+            )
+            
+            // verticle
+            drawLine(
+                start:  CGPoint(x: CGFloat($0)/CGFloat(size) * rect.size.width, y: 0.0),
+                end:    CGPoint(x: CGFloat($0)/CGFloat(size) * rect.size.width, y: rect.size.height)
+            )
+        }
+
+        
     }
     
     /**
@@ -83,7 +88,7 @@ import UIKit
         path.lineWidth = gridWidth
         path.move(to: start)
         path.addLine(to: end)
-        UIColor.black.setStroke()
+        gridColor.setStroke()
         path.stroke()
     }
     
@@ -98,5 +103,45 @@ import UIKit
         color.setFill()
         path.fill()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        lastTouchedPosition = process(touches: touches)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        lastTouchedPosition = process(touches: touches)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        lastTouchedPosition = nil
+    }
+    var lastTouchedPosition: Position?
+
+    func process(touches: Set<UITouch>) -> Position? {
+        guard touches.count == 1 else { return nil }
+        
+        let pos = convert(touch: touches.first!)
+        
+        guard lastTouchedPosition?.row != pos.row
+            || lastTouchedPosition?.col != pos.col
+            else { return pos }
+        
+        grid[pos] = grid[pos].toggle(value: grid[pos])
+        
+        setNeedsDisplay()
+        return pos
+    }
+    
+    func convert(touch: UITouch) -> Position {
+        let touchY = touch.location(in: self).y
+        let gridHeight = frame.size.height
+        let row = Int (touchY / gridHeight * CGFloat(size))
+        let touchX = touch.location(in: self).x
+        let gridWidth = frame.size.width
+        let col = Int (touchX / gridWidth * CGFloat(size))
+        let position = (row: row, col: col)
+        return position
+    }
+
 
 }

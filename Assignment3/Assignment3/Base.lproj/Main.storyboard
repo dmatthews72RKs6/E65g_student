@@ -5,6 +5,8 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,13 +22,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zhR-bJ-gAo" customClass="GridView" customModule="Assignment3" customModuleProvider="target">
-                                <rect key="frame" x="59" y="249" width="300" height="300"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHv-uW-4Xd">
+                                <rect key="frame" x="171.5" y="143" width="32" height="30"/>
+                                <state key="normal" title="Step"/>
+                                <connections>
+                                    <action selector="nextGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IXF-8D-F6P"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhR-bJ-gAo" customClass="GridView" customModule="Assignment3" customModuleProvider="target">
+                                <rect key="frame" x="37" y="183" width="300" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="zhR-bJ-gAo" secondAttribute="height" multiplier="1:1" id="c8Z-w1-MZp"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="size">
-                                        <integer key="value" value="20"/>
+                                        <integer key="value" value="19"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="livingColor">
                                         <color key="value" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,14 +54,31 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="gridWidth">
                                         <integer key="value" value="2"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="gridColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="zhR-bJ-gAo" firstAttribute="width" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="79b-hd-Q1X"/>
+                            <constraint firstItem="zhR-bJ-gAo" firstAttribute="top" secondItem="QHv-uW-4Xd" secondAttribute="bottom" constant="10" id="7eg-gX-Uux"/>
+                            <constraint firstItem="zhR-bJ-gAo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="AWd-Qt-TWP"/>
+                            <constraint firstItem="QHv-uW-4Xd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AsH-De-e0I"/>
+                            <constraint firstItem="zhR-bJ-gAo" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" priority="750" id="EQA-YE-NOy"/>
+                            <constraint firstItem="zhR-bJ-gAo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ksh-c8-2ZM"/>
+                            <constraint firstItem="zhR-bJ-gAo" firstAttribute="height" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.8" id="MfT-ww-hTz"/>
+                            <constraint firstItem="zhR-bJ-gAo" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" priority="750" id="XN7-Sv-aBG"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="grid" destination="zhR-bJ-gAo" id="IRr-jj-j0a"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="32.799999999999997" y="37.331334332833585"/>
         </scene>
     </scenes>
 </document>
