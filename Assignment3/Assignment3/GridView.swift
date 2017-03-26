@@ -12,7 +12,7 @@ import UIKit
 
     @IBInspectable var size = 20 {
         didSet{
-            grid = Grid(size, size) {_,_ in .empty}
+            grid = Grid(size, size)
         }
     }
     @IBInspectable var livingColor = UIColor.green
@@ -22,7 +22,7 @@ import UIKit
     @IBInspectable var gridColor = UIColor.black
     @IBInspectable var gridWidth: CGFloat = 2.0
     
-    var grid = Grid.init(0, 0)
+    var grid = Grid.init(20, 20)
     
     public func nextGrid() {
         grid = grid.next()
@@ -120,7 +120,7 @@ import UIKit
     func process(touches: Set<UITouch>) -> Position? {
         guard touches.count == 1 else { return nil }
         
-        let pos = convert(touch: touches.first!)
+        guard let pos = getCell(touch: touches.first!) else {return nil}
         
         guard lastTouchedPosition?.row != pos.row
             || lastTouchedPosition?.col != pos.col
@@ -132,15 +132,21 @@ import UIKit
         return pos
     }
     
-    func convert(touch: UITouch) -> Position {
-        let touchY = touch.location(in: self).y
-        let gridHeight = frame.size.height
-        let row = Int (touchY / gridHeight * CGFloat(size))
-        let touchX = touch.location(in: self).x
-        let gridWidth = frame.size.width
-        let col = Int (touchX / gridWidth * CGFloat(size))
-        let position = (row: row, col: col)
-        return position
+    func getCell(touch: UITouch) -> Position? {
+        let height = frame.size.height
+        let width = frame.size.width
+        let touchYPos = touch.location(in: self).y
+        let touchXPos = touch.location(in: self).x
+        
+        guard touchYPos <= height && touchYPos >= CGFloat(0) else {return nil}
+        guard touchXPos <= width && touchXPos >= CGFloat(0) else {return nil}
+        
+        let row = Int (touchYPos / height * CGFloat(size))
+        
+      
+        let col = Int (touchXPos / width * CGFloat(size))
+        
+        return (row: row, col: col)
     }
 
 
