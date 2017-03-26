@@ -95,9 +95,9 @@ typealias Position = (row: Int, col: Int)
  1. equip `CellState` with a computed variable `isAlive` of type `Bool` which
     is true if the CellState is alive or born, false otherwise.
  1. Note that `isAlive` MUST use **ONLY** a switch statement on self
- 1. `isAlive` can be no more than 8 readablelines long
+ 1. `isAlive` can be no more than 8 readable lines long, including curly-braces.
  
- Failure to follow all rules will result in zero credit
+ Failure to follow all rules will result in zero credit.
 */
 
 enum CellState {
@@ -133,7 +133,7 @@ struct Cell {
  I am providing the following function, `map2` immediately below.
  
  Answer the following questions on `map2` in the places shown.  (Your answers may consist of **AT MOST** once sentence):
- 1. what do the `_` characters do
+ 1. what do the `_` characters do?
  */
 // ** Your Problem 4.1 answer goes here **
 /*
@@ -142,21 +142,21 @@ The _ characters allow for map2 to be invoked with the rows and cols parameters 
  
  */
 /*:
- 2. what is the type of the `transform` variable
+ 2. what is the type of the `transform` variable?
  */
 // ** Your Problem 4.2 answer goes here **
 /*
 A function that accepts two Ints and returns something of type T
  */
 /*:
- 3. what is the return type of `map2`
+ 3. what is the return type of `map2`?
  */
 // ** Your Problem 4.3 answer goes here **
 /*
  An array of array of type T
  */
 /*:
- 4. what is `T` in this declaration
+ 4. what is `T` in this declaration?
  */
 // ** Your Problem 4.4 answer goes here **
 /*
@@ -218,7 +218,7 @@ func map2<T>(_ rows: Int, _ cols: Int, transform: (Int, Int) -> T) -> [[T]] {
  
  **HINT** you are setting the `position` and `state` properties of a value in `cells` to their appropriate values
  
- Failure to follow all rules will result in zero credit
+ Failure to follow all rules will result in zero credit.
  */
 // A grid of cells representing the world of Conway's GoL
 struct Grid {
@@ -272,7 +272,7 @@ struct Grid {
  4. make use of `$0` as passed into map
  5. be no longer than 4 readable lines long
  
- Failure to follow all rules will result in zero credit
+ Failure to follow all rules will result in zero credit.
  
  **HINT** Note that the code you are being asked to write is inside of a map
  function operating over the `offsets` array and that it returns a position
@@ -310,21 +310,21 @@ extension Grid {
  ## Problem 11:
  I am providing the following function, reduce2. Answer the following questions
  with **AT MOST** one sentence each.
- 1. what do you expect the combine argument to do
+ 1. what do you expect the combine argument to do?
  */
 // ** Your Problem 11.1 answer goes here **
 /*
  To return an Int based on the values of the three Ints it is passed.
  */
 /*:
- 2. what is the return type of reduce2
+ 2. what is the return type of reduce2?
  */
 // ** Your Problem 11.2 answer goes here **
 /*
  An Int.
  */
 /*:
- 3. why is there no T parameter here as in map2 above
+ 3. why is there no T parameter here as in map2 above?
  */
 // ** Your Problem 11.3 answer goes here **
 /*
@@ -341,20 +341,19 @@ func reduce2(_ rows: Int, _ cols: Int, combine: (Int, Int, Int) -> Int) -> Int  
 }
 /*:
  ## Problem 12:
- In the extension to Grid below:
- 
- 1. write precisely one line of code which:
- 1. uses the ternary operator ?
+ In the extension to Grid below, write precisely one line of code which:
+ 1. uses the ternary conditional operators `?:`
  1. returns `total + 1` if the state of the referenced cell is `alive`, otherwise return `total`
  
  **HINT** you are returning a running count of living neighbors
  
- Failure to follow all rules will result in zero credit
+ Failure to follow all rules will result in zero credit.
  */
 // An extension to Grid which will count the number of living cells in the grid
 extension Grid {
     var numLiving: Int {
         return reduce2(self.rows, self.cols) { total, row, col in
+
             // ** Your Problem 12 code goes here! replace the following line
            return self.cells[row][col].state.isAlive ? total + 1 : total
         }
@@ -362,20 +361,20 @@ extension Grid {
 }
 /*:
  ## Problem 13:
- Lets test your work so far.
+ Let's test your work so far.
  
  1. Uncomment the lines of working code marked immediately below.
  2. Replace the cellInitializer with a closure which
  causes each cell to be `alive` with probability 1/3 and `empty` otherwise
  
- 3. Use the following expression to determine if the `state` should be .alive or empty:
+ 3. Use the following expression to determine if the `state` should be .alive or .empty:
  
  `     arc4random_uniform(3) == 2`
  
- 4. Assign the state using the ternary operator `?`
+ 4. Assign the state using the ternary conditional operators `?:`
 
  5. If your code above compiles and runs the value returned from grid.numLiving
- should be approximately 33. If it is not debug your code above.
+ should be approximately 33. If it is not around 33, then debug your code above.
  Explain why it should be approximately but not necessarily exactly 33
  in a **one sentence** comment in the location shown below.
  
@@ -383,7 +382,7 @@ extension Grid {
  You will want to set the state of
  a cell using code similar to what you've already done
  
- Failure to follow all rules will result in zero credit
+ Failure to follow all rules will result in zero credit.
  */
 // Code to initialize a 10x10 grid, set up every cell in the grid
 // and randomly turn each cell on or off.  Uncomment following 4 lines
@@ -411,12 +410,11 @@ Each cell is independently and randomly assigned either alive or empty and thus 
  Your solution MUST:
  1. implement both a `get` and a `set`
  1. in each case consist **ONLY** of a guard-else statement followed by a single line of code
- 1. use the guard statement in both the `get` and the `set` to ensure that row and col
- are between 0 and rows or cols respectively
- 1. use the guard statement in set to ensure that the new value is not nil
+ 1. use the guard statement in both the `get` and the `set` to do boundary checking and ensure that row and col are between 0 and rows or cols respectively
+ 1. use the guard statement in `set` to ensure that the new value is not nil
  1. be no more than 4 lines for the `get` and 4 lines for the `set`
  
- Failure to follow all rules will result in zero credit
+ Failure to follow all rules will result in zero credit.
  */
 // An extension to grid to allow each cell to be referenced by its position
 extension Grid {
@@ -501,7 +499,7 @@ The $1 refers to the Position tuple inside of the current Cell which we are eval
  of cell.
  
  Your answer must use:
- 1. the ternary operator,
+ 1. the ternary operators,
  1. $0 and
  1. the state of neighborCell
  
@@ -529,9 +527,6 @@ extension Grid {
  1. implements the rules of Conway's Game of Life
  
  Your answer MUST:
- * consist solely of one guard-let statement followed by one switch statement
- * use the guard-let to create a local variable `cell` from `self[row,col]`
- * guard against `self[row,col]` being nil otherwise return `empty`
  * use a `switch` statement on `livingNeighbors(of:)` from above to determine
  the value to return
  * the switch statement should consist of a single case and a default statement
@@ -541,9 +536,9 @@ extension Grid {
  * return `alive` if the cell has 3 living neighbors regardless of
  the cell itself is alive or not
  * return `empty` otherwise
- * be no more than 10 lines long
+ * be no more than 8 lines long
  
- Failure to follow all rules will result in zero credit
+ Failure to follow all rules will result in zero credit.
  */
 // An extension to Grid to implement Conway's rules for transitioning a cell
 // from one state of the game to the next
