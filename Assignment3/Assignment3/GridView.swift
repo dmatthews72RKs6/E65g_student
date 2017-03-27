@@ -2,7 +2,7 @@
 //  GridView.swift
 //  Assignment3
 //
-//  Created by Water on 3/26/17.
+//  Created by David Matthwews on 3/26/17.
 //  Copyright © 2017 Harvard Division of Continuing Education. All rights reserved.
 //
 
@@ -24,14 +24,6 @@ import UIKit
     
     var grid = Grid.init(20, 20)
     
-    public func nextGrid() {
-        grid = grid.next()
-        setNeedsDisplay()
-        
-    }
-    
-    
-
     override func draw(_ rect: CGRect) {
         let cellSize = CGSize (
             width: rect.size.width / CGFloat(size),
@@ -57,16 +49,15 @@ import UIKit
             )
         }
         
-        // draw the grid
-        
+        // draws the grid
         (0...size).forEach {
-            // horizontal
+            // horizontal lines
             drawLine(
                 start:  CGPoint(x: 0.0, y: CGFloat($0)/CGFloat(size) * rect.size.height),
                 end:    CGPoint(x: rect.size.width, y: CGFloat($0)/CGFloat(size) * rect.size.height)
             )
             
-            // verticle
+            // verticle lines
             drawLine(
                 start:  CGPoint(x: CGFloat($0)/CGFloat(size) * rect.size.width, y: 0.0),
                 end:    CGPoint(x: CGFloat($0)/CGFloat(size) * rect.size.width, y: rect.size.height)
@@ -76,13 +67,6 @@ import UIKit
         
     }
     
-    /**
-    Draws a line of a desired color from start to end.
-     
-     - Parameter start: The point to start drawing the line at.
-     - Parameter end: The point to end the line at.
-     - Parameter color: The color of the line.
-    */
     func drawLine (start: CGPoint, end: CGPoint) {
         let path = UIBezierPath()
         path.lineWidth = gridWidth
@@ -91,8 +75,6 @@ import UIKit
         gridColor.setStroke()
         path.stroke()
     }
-    
-    //TODO: make the circles slightly smaller to not overlap with the grid lines
     
     func drawCircle (origin: CGPoint, size: CGSize, color: UIColor) {
         let rect = CGRect(
@@ -117,6 +99,9 @@ import UIKit
     }
     var lastTouchedPosition: Position?
 
+    /**
+     Calculates the cell in which a touch occured and toggles the affected cell before requesting a redraw of the screen.
+    */
     func process(touches: Set<UITouch>) -> Position? {
         guard touches.count == 1 else { return nil }
         
@@ -132,6 +117,9 @@ import UIKit
         return pos
     }
     
+    /**
+     Calculates and returns the cell in which a touch occured. In the event that a touch is started and moves off the grid, the period in which the touch is off the grid returns nil.
+     */
     func getCell(touch: UITouch) -> Position? {
         let height = frame.size.height
         let width = frame.size.width
@@ -149,5 +137,12 @@ import UIKit
         return (row: row, col: col)
     }
 
-
+    /**
+     Calculates the next state of the grid, and requests a redraw of the screen
+    */
+    public func nextGrid() {
+        grid = grid.next()
+        setNeedsDisplay()
+        
+    }
 }

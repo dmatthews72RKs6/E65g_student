@@ -1,6 +1,11 @@
 //
 //  Grid.swift
+//  Assignment3
 //
+//  Created by David Matthwews on 3/26/17.
+//  Copyright © 2017 Harvard Division of Continuing Education. All rights reserved.
+//
+
 import Foundation
 
 public typealias Position = (row: Int, col: Int)
@@ -25,7 +30,7 @@ public func positionSequence (from: Position, to: Position) -> PositionSequence 
 }
 
 public enum CellState: String {
-    case alive = "alive", empty = "empty", born = "born", died
+    case alive = "alive", empty = "empty", born = "born", died = "died"
     
     public var isAlive: Bool {
         switch self {
@@ -39,12 +44,20 @@ public enum CellState: String {
         case .alive, .empty, .born, .died: return rawValue
         }
     }
+    
+    public func allValues() -> [String]{
+        let allValues = [CellState.alive.rawValue, CellState.empty.rawValue, CellState.born.rawValue, CellState.died.rawValue]
+        return allValues
+    }
+    
     public func toggle(value: CellState) -> CellState {
         switch value {
             case .empty, .died: return .alive
             case .alive, .born: return .empty
         }
     }
+    
+    
 }
 
 public struct Cell {
