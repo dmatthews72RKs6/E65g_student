@@ -7,6 +7,11 @@
 //
 
 import Foundation
+
+public protocol EngineDelegate {
+    func engineDidUpdate(withGrid: GridProtocol)
+}
+
 public protocol EngineProtocol {
     var delegate: EngineDelegate { get set }
     var grid: GridProtocol { get }
@@ -47,11 +52,11 @@ public class StandardEngine: EngineProtocol {
         }
     }
         
-        public init(rows: Int, cols: Int) {
+    public required init(rows: Int, cols: Int) {
             self.grid = Grid(rows, cols)
-        }
+    }
         
-        func step() -> GridProtocol {
+    public func step() -> GridProtocol {
             let newGrid = grid.next()
             grid = newGrid
             //         updateClosure?(self.grid)

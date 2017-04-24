@@ -10,19 +10,19 @@ import UIKit
 
 class SimulationViewController: UIViewController {
     
+    @IBOutlet weak var gridView: GridView!
     var engine: EngineProtocol!
     var timer: Timer?
    
     override func viewDidLoad() {
         super.viewDidLoad()
         let size = gridView.gridSize
-        engine = Engine(rows: size, cols: size)
-        engine.delegate = self
-        engine.updateClosure = { (grid) in
-            self.gridView.setNeedsDisplay()
-        }
-        gridView.gridDataSource = self
-        sizeStepper.value = Double(engine.grid.size.rows)
+        engine = StandardEngine(rows: size, cols: size)
+        
+        engine.delegate = self as! EngineDelegate
+        
+        gridView.gridDataSource = self as? GridViewDataSource
+        // sizeStepper.value = Double(engine.grid.size.rows)
         
         let nc = NotificationCenter.default
         let name = Notification.Name(rawValue: "EngineUpdate")
@@ -40,10 +40,7 @@ class SimulationViewController: UIViewController {
     }
     
     public subscript (row: Int, col: Int) -> CellState {
-        get { return engine.grid[row,col]
-            }
-        set { engine.grid[row,col] = newValue
-            }
+        get { return engine.grid[row,col] }
     }
     
     override func didReceiveMemoryWarning() {

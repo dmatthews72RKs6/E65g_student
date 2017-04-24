@@ -13,7 +13,7 @@ public protocol GridViewDataSource {
 }
 
 
-@available(iOS 10.0, *)
+
 @IBDesignable class GridView: UIView {
 
 
