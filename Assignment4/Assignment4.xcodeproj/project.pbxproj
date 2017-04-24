@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		63FFB49B1EA7B9010095DD54 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FFB49A1EA7B9010095DD54 /* StatisticsViewController.swift */; };
-		63FFB49D1EA7BC2C0095DD54 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FFB49C1EA7BC2C0095DD54 /* Engine.swift */; };
+		63FFB49D1EA7BC2C0095DD54 /* StandardEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FFB49C1EA7BC2C0095DD54 /* StandardEngine.swift */; };
 		63FFB49F1EA7BC830095DD54 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FFB49E1EA7BC830095DD54 /* Grid.swift */; };
 		63FFB4A31EA7BD4C0095DD54 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FFB4A21EA7BD4C0095DD54 /* GridView.swift */; };
 		FBAD2E071E2BE38C008207C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAD2E061E2BE38C008207C0 /* AppDelegate.swift */; };
@@ -21,7 +21,7 @@
 
 /* Begin PBXFileReference section */
 		63FFB49A1EA7B9010095DD54 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatisticsViewController.swift; path = ../StatisticsViewController.swift; sourceTree = "<group>"; };
-		63FFB49C1EA7BC2C0095DD54 /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
+		63FFB49C1EA7BC2C0095DD54 /* StandardEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardEngine.swift; sourceTree = "<group>"; };
 		63FFB49E1EA7BC830095DD54 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		63FFB4A21EA7BD4C0095DD54 /* GridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GridView.swift; path = ../GridView.swift; sourceTree = "<group>"; };
 		FBAD2E031E2BE38C008207C0 /* Assignment4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assignment4.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,7 +74,7 @@
 				FBAD2E141E2BE38C008207C0 /* Info.plist */,
 				63FFB4A21EA7BD4C0095DD54 /* GridView.swift */,
 				63FFB49E1EA7BC830095DD54 /* Grid.swift */,
-				63FFB49C1EA7BC2C0095DD54 /* Engine.swift */,
+				63FFB49C1EA7BC2C0095DD54 /* StandardEngine.swift */,
 			);
 			path = Assignment4;
 			sourceTree = "<group>";
@@ -157,7 +157,7 @@
 				63FFB4A31EA7BD4C0095DD54 /* GridView.swift in Sources */,
 				FBAD2E071E2BE38C008207C0 /* AppDelegate.swift in Sources */,
 				FBAD2E091E2BE38C008207C0 /* InstrumentationViewController.swift in Sources */,
-				63FFB49D1EA7BC2C0095DD54 /* Engine.swift in Sources */,
+				63FFB49D1EA7BC2C0095DD54 /* StandardEngine.swift in Sources */,
 				63FFB49F1EA7BC830095DD54 /* Grid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
