@@ -22,7 +22,7 @@ public protocol GridProtocol {
     var description: String { get }
     var size: GridSize { get }
     subscript (row: Int, col: Int) -> CellState { get set }
-    func next() -> Self
+    func next() -> Self 
 }
 
 public let lazyPositions = { (size: GridSize) in
@@ -71,7 +71,7 @@ extension GridProtocol {
 public struct Grid: GridProtocol {
     private var _cells: [[CellState]]
     public let size: GridSize
-    
+
     public subscript (row: Int, col: Int) -> CellState {
         get { return _cells[norm(row, to: size.rows)][norm(col, to: size.cols)] }
         set { _cells[norm(row, to: size.rows)][norm(col, to: size.cols)] = newValue }
