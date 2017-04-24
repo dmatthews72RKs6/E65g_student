@@ -15,7 +15,16 @@ public enum CellState {
         default: return false
         }
     }
+    
+    public var toggle: CellState {
+        switch self {
+        case .empty, .died: return .alive
+        case .alive, .born: return .empty
+        }
+    }
 }
+
+
 
 public protocol GridProtocol {
     init(_ rows: Int, _ cols: Int, cellInitializer: (GridPosition) -> CellState)
@@ -67,6 +76,7 @@ extension GridProtocol {
         return nextGrid
     }
 }
+
 
 public struct Grid: GridProtocol {
     private var _cells: [[CellState]]

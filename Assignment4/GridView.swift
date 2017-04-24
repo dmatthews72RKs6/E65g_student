@@ -23,58 +23,53 @@ public protocol GridViewDataSource {
     @IBInspectable var diedColor = UIColor.black
     @IBInspectable var gridColor = UIColor.black
     @IBInspectable var gridWidth: CGFloat = 2.0
+    @IBInspectable var gridSize  = 20
     
     var gridDataSource: GridViewDataSource?
     
     override func draw(_ rect: CGRect) {
-        let gridSize = GridSize(rows: 20, cols: 20)
         let cellSize = CGSize (
-            width: rect.size.width / CGFloat(gridSize.cols),
-            height: rect.size.height / CGFloat(gridSize.rows)
+            width: rect.size.width / CGFloat(gridSize),
+            height: rect.size.height / CGFloat(gridSize)
         )
         
         // draw the circles
-        (0 ..< gridSize.rows).forEach { i in
-            (0 ..< gridSize.cols).forEach { j in
+        (0 ..< gridSize).forEach { i in
+            (0 ..< gridSize).forEach { j in
                 if let grid = gridDataSource, grid[i,j].isAlive {
                     
                 }
 
                 let color: UIColor
+                
                 switch gridDataSource![i, j] {
                     case .alive: color = livingColor
                     case .empty: color = emptyColor
                     case .born: color = bornColor
                     case .died: color = diedColor
-                    default: color = UIColor.black
                 }
                 drawCircle(
                     origin: CGPoint(x: cellSize.width * CGFloat(j), y: cellSize.height * CGFloat(i)),
                     size: cellSize,
                     color: color
                 )
-
             }
-            
         }
         
         // draws the grid
-        (0...gridSize.cols).forEach {
+        (0...gridSize).forEach {
             // verticle lines
             drawLine(
-                start:  CGPoint(x: CGFloat($0)/CGFloat(gridSize.cols) * rect.size.width, y: 0.0),
-                end:    CGPoint(x: CGFloat($0)/CGFloat(gridSize.cols) * rect.size.width, y: rect.size.height)
+                start:  CGPoint(x: CGFloat($0)/CGFloat(gridSize) * rect.size.width, y: 0.0),
+                end:    CGPoint(x: CGFloat($0)/CGFloat(gridSize) * rect.size.width, y: rect.size.height)
             )
-        }
-        (0...gridSize.rows).forEach {
             // horizontal lines
             drawLine(
-                start:  CGPoint(x: 0.0, y: CGFloat($0)/CGFloat(gridSize.rows) * rect.size.height),
-                end:    CGPoint(x: rect.size.width, y: CGFloat($0)/CGFloat(gridSize.rows) * rect.size.height)
+                start:  CGPoint(x: 0.0, y: CGFloat($0)/CGFloat(gridSize) * rect.size.height),
+                end:    CGPoint(x: rect.size.width, y: CGFloat($0)/CGFloat(gridSize) * rect.size.height)
             )
 
         }
-        
         
     }
     
@@ -122,7 +117,7 @@ public protocol GridViewDataSource {
             || lastTouchedPosition?.col != pos.col
             else { return pos }
         
-        grid[pos] = grid[pos].toggle(value: grid[pos])
+        gridDataSource?[pos.row, pos.col] = (gridDataSource?[pos.row, pos.col].toggle)!
         
         setNeedsDisplay()
         return pos
@@ -140,10 +135,10 @@ public protocol GridViewDataSource {
         guard touchYPos <= height && touchYPos >= CGFloat(0) else {return nil}
         guard touchXPos <= width && touchXPos >= CGFloat(0) else {return nil}
         
-        let row = Int (touchYPos / height * CGFloat(size))
+        let row = Int (touchYPos / height * CGFloat(gridSize))
         
       
-        let col = Int (touchXPos / width * CGFloat(size))
+        let col = Int (touchXPos / width * CGFloat(gridSize))
         
         return GridPosition(row: row, col: col)
     }
