@@ -10,12 +10,13 @@ import Foundation
 
 
 public protocol EngineProtocol {
-    
-    init(_ rows: Int, _ cols: Int, cellInitializer: (GridPosition) -> CellState)
-    var description: String { get }
-    var size: GridSize { get }
-    subscript (row: Int, col: Int) -> CellState { get set }
-    func next() -> Self
+    var delegate: EngineDelegate
+    var grid: GridProtocol { get }
+    var refreshRate: Double { get set }
+    var refreshTimer: Timer { get set }
+    var size: Int { get set}
+    init (_ rows: Int, _cols: Int)
+    func step () -> GridProtocol
 }
 
 @available(iOS 10.0, *)
@@ -23,7 +24,7 @@ class Engine {
     static var engine: Engine = Engine(rows: 10, cols: 10)
     
     var grid: Grid
-   // var delegate: EngineDelegate?
+    
     
     var updateClosure: ((Grid) -> Void)?
     var timer: Timer?
@@ -52,7 +53,7 @@ class Engine {
         let newGrid = grid.next()
         grid = newGrid
         //         updateClosure?(self.grid)
-   //     delegate?.engineDidUpdate(withGrid: grid)
+        delegate?.engineDidUpdate(withGrid: grid)
         //          let nc = NotificationCenter.default
         //          let name = Notification.Name(rawValue: "EngineUpdate")
         //          let n = Notification(name: name,
