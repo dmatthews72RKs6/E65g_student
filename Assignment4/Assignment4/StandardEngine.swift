@@ -8,12 +8,12 @@
 
 import Foundation
 
-public protocol EngineDelegate {
-    func engineDidUpdate(withGrid: GridProtocol)
-}
+//public protocol EngineDelegate {
+  //  func engineDidUpdate(withGrid: GridProtocol)
+//}
 
 public protocol EngineProtocol {
-    var delegate: EngineDelegate? { get set }
+  //  var delegate: EngineDelegate? { get set }
     var grid: GridProtocol { get set }
     var refreshRate: Double { get set }
     var refreshTimer: Timer? { get set }
@@ -24,7 +24,7 @@ public protocol EngineProtocol {
 
 public class StandardEngine: EngineProtocol {
     
-    public var delegate: EngineDelegate?
+    // public var delegate: EngineDelegate?
 
     public var size: Int = 10
     public var grid: GridProtocol
@@ -48,17 +48,33 @@ public class StandardEngine: EngineProtocol {
                 }
             }
             else {
-                refreshTimer?.invalidate()
-                refreshTimer = nil
+                stopTimer()
             }
         }
     }
+    
+    public func stopTimer () {
+        refreshTimer?.invalidate()
+        refreshTimer = nil
+    }
+    
+    public func startTimer() {
+        if (timerInterval > 0.0) {
+            refreshTimer = Timer.scheduledTimer(
+                withTimerInterval:  timerInterval,
+                repeats: true
+        ) { (t: Timer) in
+            _ = self.step()
+        }
+    
+    }
+
         
     public required init(rows: Int, cols: Int) {
         self.grid = Grid.init(rows, cols)
         self.size = rows
         self.refreshTimer = nil
-        self.delegate = {} as? EngineDelegate
+      //  self.delegate = {} as? EngineDelegate
         
     }
     
@@ -66,7 +82,7 @@ public class StandardEngine: EngineProtocol {
             let newGrid = grid.next()
             grid = newGrid
             //         updateClosure?(self.grid)
-            delegate?.engineDidUpdate(withGrid: grid)
+    //        delegate?.engineDidUpdate(withGrid: grid)
                       let nc = NotificationCenter.default
                       let name = Notification.Name(rawValue: "EngineUpdate")
                       let n = Notification(name: name,

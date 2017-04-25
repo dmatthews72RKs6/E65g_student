@@ -23,6 +23,7 @@ class SimulationViewController: UIViewController, GridViewDataSource {
     public var size: Int = 10
     public var name: String = "SimulationViewController"
    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         engine = StandardEngine.engine
@@ -30,33 +31,47 @@ class SimulationViewController: UIViewController, GridViewDataSource {
         print ("EngineGridCell00: \(engine.grid[0,0].isAlive)")
         size = engine.size
 
-        engine.delegate = self as? EngineDelegate
+       // engine.delegate = self as? EngineDelegate
         
         gridView.gridDataSource = self as GridViewDataSource
         print ("Simulation - GridView.gridDataSource\(gridView.gridDataSource!)")
         
         // sizeStepper.value = Double(engine.grid.size.rows)
         
+        
+        // for updating the grid on the scren
         let nc = NotificationCenter.default
-        let name = Notification.Name(rawValue: "EngineUpdate")
+        let ncname = Notification.Name(rawValue: "EngineUpdate")
         nc.addObserver(
-            forName: name,
+            forName: ncname,
             object: nil,
             queue: nil) { (n) in
                 self.gridView.setNeedsDisplay()
         }
+        
+        // do we run the timer?
+        let rs = NotificationCenter.default
+        let rsname = Notification.Name(rawValue: "RunSimulation")
+        rs.addObserver (forName: rsname,
+                        object: Bool.self,
+                        queue: nil) { (n) in
+                            if (object) {
+                                
+                            }
+        }
+        
         
     }
     
     @IBAction func Step(_ sender: Any) {
         _ = self.engine.step()
     }
+    
     func engineDidUpdate(withGrid: GridProtocol) {
         self.gridView.setNeedsDisplay()
     }
     
-    
-    
+  
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
