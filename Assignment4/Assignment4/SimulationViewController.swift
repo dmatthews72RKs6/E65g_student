@@ -10,16 +10,19 @@ import UIKit
 
 class SimulationViewController: UIViewController {
     
+
     @IBOutlet weak var gridView: GridView!
+    
     var engine: EngineProtocol!
     var timer: Timer?
    
     override func viewDidLoad() {
         super.viewDidLoad()
         let size = gridView.gridSize
-        engine = StandardEngine(rows: size, cols: size)
+        engine = StandardEngine.engine
+        print (engine.grid.description)
         
-        engine.delegate = self as! EngineDelegate
+        engine.delegate = self as? EngineDelegate
         
         gridView.gridDataSource = self as? GridViewDataSource
         // sizeStepper.value = Double(engine.grid.size.rows)

@@ -14,16 +14,16 @@ public protocol GridViewDataSource {
 
 
 
-@IBDesignable class GridView: UIView {
+class GridView: UIView {
 
 
-    @IBInspectable var livingColor = UIColor.green
-    @IBInspectable var emptyColor = UIColor.lightGray
-    @IBInspectable var bornColor = UIColor.cyan
-    @IBInspectable var diedColor = UIColor.black
-    @IBInspectable var gridColor = UIColor.black
-    @IBInspectable var gridWidth: CGFloat = 2.0
-    @IBInspectable var gridSize  = 20
+     var livingColor = UIColor.green
+     var emptyColor = UIColor.lightGray
+     var bornColor = UIColor.cyan
+     var diedColor = UIColor.black
+     var gridColor = UIColor.black
+     var gridWidth: CGFloat = 2.0
+     var gridSize  = 20
     
     var gridDataSource: GridViewDataSource?
     
@@ -32,22 +32,24 @@ public protocol GridViewDataSource {
             width: rect.size.width / CGFloat(gridSize),
             height: rect.size.height / CGFloat(gridSize)
         )
-        
+
         // draw the circles
         (0 ..< gridSize).forEach { i in
             (0 ..< gridSize).forEach { j in
-                if let grid = gridDataSource, grid[i,j].isAlive {
-                    
-                }
-
                 let color: UIColor
                 
-                switch gridDataSource![i, j] {
+                if let grid = gridDataSource {
+                    switch grid[i, j] {
                     case .alive: color = livingColor
                     case .empty: color = emptyColor
                     case .born: color = bornColor
                     case .died: color = diedColor
+                    }
                 }
+                else {
+                    color = emptyColor
+                }
+               
                 drawCircle(
                     origin: CGPoint(x: cellSize.width * CGFloat(j), y: cellSize.height * CGFloat(i)),
                     size: cellSize,
@@ -117,7 +119,11 @@ public protocol GridViewDataSource {
             || lastTouchedPosition?.col != pos.col
             else { return pos }
         
-        gridDataSource?[pos.row, pos.col] = (gridDataSource?[pos.row, pos.col].toggle)!
+        print (gridDataSource)
+        print ("oldCellState \(String(describing: gridDataSource?[pos.row, pos.col].isAlive))")
+        let newCellState = (gridDataSource?[pos.row, pos.col].toggle)!
+        print ("newCellState \(newCellState.isAlive)")
+        gridDataSource?[pos.row, pos.col] = newCellState
         
         setNeedsDisplay()
         return pos
@@ -140,6 +146,7 @@ public protocol GridViewDataSource {
       
         let col = Int (touchXPos / width * CGFloat(gridSize))
         
+        print ("row: \(row), col: \(col)")
         return GridPosition(row: row, col: col)
     }
 
