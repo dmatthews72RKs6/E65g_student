@@ -8,7 +8,12 @@
 
 import UIKit
 
-class SimulationViewController: UIViewController {
+class SimulationViewController: UIViewController, GridViewDataSource {
+    subscript(row: Int, col: Int) -> CellState {
+        get { return engine.grid[row,col]  }
+        set { engine.grid[row,col] = newValue }
+    }
+
     
 
     @IBOutlet weak var gridView: GridView!
@@ -16,17 +21,20 @@ class SimulationViewController: UIViewController {
     var engine: EngineProtocol!
     var timer: Timer?
     public var size: Int = 10
+    public var name: String = "SimulationViewController"
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        StandardEngine.engine = StandardEngine(rows: size, cols: size)
         engine = StandardEngine.engine
-        print (engine.grid.description)
+        print ("EngineSize: \(engine.size)")
+        print ("EngineGridCell00: \(engine.grid[0,0].isAlive)")
         size = engine.size
 
         engine.delegate = self as? EngineDelegate
         
-        gridView.gridDataSource = self as? GridViewDataSource
+        gridView.gridDataSource = self as GridViewDataSource
+        print ("Simulation - GridView.gridDataSource\(gridView.gridDataSource!)")
+        
         // sizeStepper.value = Double(engine.grid.size.rows)
         
         let nc = NotificationCenter.default
@@ -44,9 +52,7 @@ class SimulationViewController: UIViewController {
         self.gridView.setNeedsDisplay()
     }
     
-    public subscript (row: Int, col: Int) -> CellState {
-        get { return engine.grid[row,col] }
-    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

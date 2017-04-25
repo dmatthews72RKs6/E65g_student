@@ -14,7 +14,7 @@ public protocol EngineDelegate {
 
 public protocol EngineProtocol {
     var delegate: EngineDelegate? { get set }
-    var grid: GridProtocol { get }
+    var grid: GridProtocol { get set }
     var refreshRate: Double { get set }
     var refreshTimer: Timer? { get set }
     var size: Int { get set}
@@ -33,7 +33,7 @@ public class StandardEngine: EngineProtocol {
     public var refreshTimer: Timer?
     
 
-    static var engine: StandardEngine? = nil
+    static var engine: StandardEngine = StandardEngine.init(rows: 10, cols: 10)
     
     var updateClosure: ((Grid) -> Void)?
     
@@ -55,10 +55,10 @@ public class StandardEngine: EngineProtocol {
     }
         
     public required init(rows: Int, cols: Int) {
-            self.grid = Grid.init(rows, cols)
-            self.size = rows
-            self.refreshTimer = nil
-            self.delegate = {} as? EngineDelegate
+        self.grid = Grid.init(rows, cols){_,_ in .alive}
+        self.size = rows
+        self.refreshTimer = nil
+        self.delegate = {} as? EngineDelegate
         
     }
     

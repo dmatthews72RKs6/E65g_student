@@ -11,6 +11,7 @@ import UIKit
 public protocol GridViewDataSource {
     subscript (row: Int, col: Int) -> CellState { get set }
     var size: Int { get set }
+    var name: String { get }
 }
 
 
@@ -48,7 +49,7 @@ class GridView: UIView {
                     }
                 }
                 else {
-                    color = emptyColor
+                    color = UIColor.clear
                 }
                
                 drawCircle(
@@ -96,6 +97,7 @@ class GridView: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print ("GridViewDataSource00: \(String(describing: gridDataSource?.name))")
         lastTouchedPosition = process(touches: touches)
     }
     
@@ -120,7 +122,6 @@ class GridView: UIView {
             || lastTouchedPosition?.col != pos.col
             else { return pos }
         
-        print (gridDataSource)
         print ("oldCellState \(String(describing: gridDataSource?[pos.row, pos.col].isAlive))")
         let newCellState = (gridDataSource?[pos.row, pos.col].toggle)!
         print ("newCellState \(newCellState.isAlive)")
