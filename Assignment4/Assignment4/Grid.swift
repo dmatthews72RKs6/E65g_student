@@ -51,6 +51,7 @@ let offsets: [GridPosition] = [
 
 extension GridProtocol {
     public var description: String {
+        print(self.size)
         return lazyPositions(self.size)
             .map { (self[$0.row, $0.col].isAlive ? "*" : " ") + ($0.col == self.size.cols - 1 ? "\n" : "") }
             .joined()

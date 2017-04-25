@@ -33,8 +33,7 @@ public class StandardEngine: EngineProtocol {
     public var refreshTimer: Timer?
     
 
-    static var engine: StandardEngine = StandardEngine(rows: 10, cols: 10)
-    
+    static var engine: StandardEngine? = nil
     
     var updateClosure: ((Grid) -> Void)?
     
@@ -56,7 +55,7 @@ public class StandardEngine: EngineProtocol {
     }
         
     public required init(rows: Int, cols: Int) {
-            self.grid = Grid(rows, cols)
+            self.grid = Grid.init(rows, cols)
             self.size = rows
             self.refreshTimer = nil
             self.delegate = {} as? EngineDelegate

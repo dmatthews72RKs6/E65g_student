@@ -15,13 +15,15 @@ class SimulationViewController: UIViewController {
     
     var engine: EngineProtocol!
     var timer: Timer?
+    public var size: Int = 10
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let size = gridView.gridSize
+        StandardEngine.engine = StandardEngine(rows: size, cols: size)
         engine = StandardEngine.engine
         print (engine.grid.description)
-        
+        size = engine.size
+
         engine.delegate = self as? EngineDelegate
         
         gridView.gridDataSource = self as? GridViewDataSource

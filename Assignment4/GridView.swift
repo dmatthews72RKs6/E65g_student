@@ -10,24 +10,25 @@ import UIKit
 
 public protocol GridViewDataSource {
     subscript (row: Int, col: Int) -> CellState { get set }
+    var size: Int { get set }
 }
 
 
 
 class GridView: UIView {
 
-
-     var livingColor = UIColor.green
-     var emptyColor = UIColor.lightGray
-     var bornColor = UIColor.cyan
-     var diedColor = UIColor.black
-     var gridColor = UIColor.black
-     var gridWidth: CGFloat = 2.0
-     var gridSize  = 20
     
     var gridDataSource: GridViewDataSource?
+    var livingColor = UIColor.green
+    var emptyColor = UIColor.lightGray
+    var bornColor = UIColor.cyan
+    var diedColor = UIColor.black
+    var gridColor = UIColor.black
+    var gridWidth: CGFloat = 2.0
+    var gridSize: Int = 10
     
     override func draw(_ rect: CGRect) {
+        
         let cellSize = CGSize (
             width: rect.size.width / CGFloat(gridSize),
             height: rect.size.height / CGFloat(gridSize)
