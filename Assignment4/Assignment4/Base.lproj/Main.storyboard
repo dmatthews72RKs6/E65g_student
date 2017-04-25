@@ -142,12 +142,17 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pgb-FO-YGl">
-                                        <rect key="frame" x="143.5" y="82" width="32" height="30"/>
+                                        <rect key="frame" x="143.5" y="92" width="32" height="30"/>
                                         <state key="normal" title="Step"/>
+                                        <connections>
+                                            <action selector="Step:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="woa-75-NjC"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="Pgb-FO-YGl" firstAttribute="centerX" secondItem="r6v-sY-U3W" secondAttribute="centerX" id="9XB-Nv-1jc"/>
                                     <constraint firstItem="FJ3-03-mOE" firstAttribute="width" secondItem="r6v-sY-U3W" secondAttribute="width" multiplier="0.8" priority="750" id="B3c-wd-SxG"/>
+                                    <constraint firstItem="FJ3-03-mOE" firstAttribute="top" secondItem="Pgb-FO-YGl" secondAttribute="bottom" id="MEH-oB-Sdn"/>
                                     <constraint firstItem="FJ3-03-mOE" firstAttribute="centerY" secondItem="r6v-sY-U3W" secondAttribute="centerY" id="N96-VV-Grt"/>
                                     <constraint firstItem="FJ3-03-mOE" firstAttribute="height" secondItem="r6v-sY-U3W" secondAttribute="height" multiplier="0.8" priority="750" id="PGl-J7-7Ne"/>
                                     <constraint firstItem="FJ3-03-mOE" firstAttribute="centerX" secondItem="r6v-sY-U3W" secondAttribute="centerX" id="PzE-s6-R7g"/>

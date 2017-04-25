@@ -55,7 +55,7 @@ public class StandardEngine: EngineProtocol {
     }
         
     public required init(rows: Int, cols: Int) {
-        self.grid = Grid.init(rows, cols){_,_ in .alive}
+        self.grid = Grid.init(rows, cols)
         self.size = rows
         self.refreshTimer = nil
         self.delegate = {} as? EngineDelegate

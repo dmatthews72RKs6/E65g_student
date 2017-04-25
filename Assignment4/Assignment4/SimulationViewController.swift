@@ -48,6 +48,9 @@ class SimulationViewController: UIViewController, GridViewDataSource {
         
     }
     
+    @IBAction func Step(_ sender: Any) {
+        _ = self.engine.step()
+    }
     func engineDidUpdate(withGrid: GridProtocol) {
         self.gridView.setNeedsDisplay()
     }
