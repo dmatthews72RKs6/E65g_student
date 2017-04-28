@@ -27,19 +27,13 @@ class SimulationViewController: UIViewController, GridViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         engine = StandardEngine.engine
-        print ("EngineSize: \(engine.size)")
-        print ("EngineGridCell00: \(engine.grid[0,0].isAlive)")
         size = engine.size
-
-       // engine.delegate = self as? EngineDelegate
-        
+        engine.delegate = self as? EngineDelegate
         gridView.gridDataSource = self as GridViewDataSource
-        print ("Simulation - GridView.gridDataSource\(gridView.gridDataSource!)")
-        
-        // sizeStepper.value = Double(engine.grid.size.rows)
         
         
-        // for updating the grid on the scren
+        
+        // for updating the grid on the screen
         let nc = NotificationCenter.default
         let ncname = Notification.Name(rawValue: "EngineUpdate")
         nc.addObserver(
@@ -51,16 +45,14 @@ class SimulationViewController: UIViewController, GridViewDataSource {
         
         // do we run the timer?
         let rs = NotificationCenter.default
-        let rsname = Notification.Name(rawValue: "RunSimulation")
+        let rsname = Notification.Name(rawValue: "InstrumentationRunSim")
         rs.addObserver (forName: rsname,
-                        object: Bool.self,
+                        object: nil,
                         queue: nil) { (n) in
-                            if (object) {
-                                
-                            }
+                           self.engine.runSim = (n.object as? Bool)!
+                        print ("SimulationViewController recieved an NSNotification \(String(describing:(n.object as? Bool)))")
+            
         }
-        
-        
     }
     
     @IBAction func Step(_ sender: Any) {
