@@ -10,7 +10,6 @@ import UIKit
 
 class InstrumentationViewController: UIViewController {
     let nc = NotificationCenter.default
-    let name = Notification.Name(rawValue: "InstrumentationRunSim")
     
     @IBOutlet weak var gridSizeBox: UITextField!
     @IBOutlet weak var gridSizeStepper: UIStepper!
@@ -30,20 +29,30 @@ class InstrumentationViewController: UIViewController {
     }
    
     @IBAction func runSimulationSwitch(_ sender: UISwitch) {
+        let name = Notification.Name(rawValue: "InstrumentationRunSim")
         let n = Notification(name: name,
                              object: sender.isOn,
                              userInfo: ["InstrumentationRunSim" : sender])
         nc.post(n)
-        print ("InstrumentationViewController sent an NSNotification \(sender.isOn)")
     }
     
     @IBAction func updateRefreshRate(_ sender: UISlider) {
+        let name = Notification.Name(rawValue: "InstrumentationRefreshRate")
         let n = Notification(name: name,
-                             object: sender.value,
+                             object: (sender.value * 10 + 1),
                              userInfo: ["InstrumentationRefreshRate" : sender])
         nc.post(n)
     }
     
+    @IBAction func changeGridSize(_ sender: UIStepper) {
+        let newSize = Int(sender.value * 10)
+        let name = Notification.Name(rawValue: "InstrumentationGridSize")
+        let n = Notification(name: name,
+                             object: newSize,
+                             userInfo: ["InstrumentationGridSize" : sender])
+        nc.post(n)
+        gridSizeBox.text = ("\(StandardEngine.engine.size)")
+    }
 
 }
 

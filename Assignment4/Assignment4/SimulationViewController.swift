@@ -13,6 +13,8 @@ class SimulationViewController: UIViewController, GridViewDataSource {
         get { return engine.grid[row,col]  }
         set { engine.grid[row,col] = newValue }
     }
+    
+    
 
     
 
@@ -20,14 +22,22 @@ class SimulationViewController: UIViewController, GridViewDataSource {
     
     var engine: EngineProtocol!
     var timer: Timer?
-    public var size: Int = 10
+    public var size: Int {
+        get {
+             return StandardEngine.engine.size
+        }
+        set {
+            StandardEngine.engine.size = size
+        }
+       
+    }
+
     public var name: String = "SimulationViewController"
    
    
     override func viewDidLoad() {
         super.viewDidLoad()
         engine = StandardEngine.engine
-        size = engine.size
         engine.delegate = self as? EngineDelegate
         gridView.gridDataSource = self as GridViewDataSource
         
@@ -50,11 +60,25 @@ class SimulationViewController: UIViewController, GridViewDataSource {
                         object: nil,
                         queue: nil) { (n) in
                            self.engine.runSim = (n.object as? Bool)!
-                        print ("SimulationViewController recieved an NSNotification \(String(describing:(n.object as? Bool)))")
-            
+                            
+        let gridSize = NotificationCenter.default
+        let gridSizeName = Notification.Name(rawValue: "InstrumentationGridSize")
+        gridSize.addObserver (forName: gridSizeName,
+                              object: nil,
+                              queue: nil) { (n) in
+                                self.engine.size = (n.object as? Int)!
+                            }
+        }
+        let refreshRate = NotificationCenter.default
+        let refreshRateName = Notification.Name(rawValue: "InstrumentationRefreshRate")
+        refreshRate.addObserver (forName: refreshRateName,
+                              object: nil,
+                              queue: nil) { (n) in
+                                self.engine.refreshRate = Double((n.object as? Float)!)
         }
     }
     
+
     @IBAction func Step(_ sender: Any) {
         _ = self.engine.step()
     }

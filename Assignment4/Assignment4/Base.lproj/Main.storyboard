@@ -60,6 +60,9 @@
                                     </textField>
                                     <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="R3p-aa-Kgw">
                                         <rect key="frame" x="194" y="71" width="94" height="29"/>
+                                        <connections>
+                                            <action selector="changeGridSize:" destination="9pv-A4-QxB" eventType="valueChanged" id="LSr-Fs-mc1"/>
+                                        </connections>
                                     </stepper>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grid Size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pP-lR-61S">
                                         <rect key="frame" x="0.0" y="75" width="69" height="21"/>

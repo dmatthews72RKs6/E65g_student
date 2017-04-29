@@ -28,7 +28,6 @@ public class StandardEngine: EngineProtocol {
 
     public var runSim: Bool  = false {
         didSet{
-            print ("RunSim changed: \(runSim)")
             if (runSim) {
                 startTimer()
             }
@@ -42,14 +41,23 @@ public class StandardEngine: EngineProtocol {
     
     // public var delegate: EngineDelegate?
 
-    public var size: Int = 10
+    public var size: Int = 10 {
+        didSet {
+            self.grid = Grid.init (size,size)
+            delegate?.engineDidUpdate(withGrid: self.grid)
+            
+        }
+    }
+
     public var grid: GridProtocol
     
     public var refreshRate: Double = 0 {
         didSet {
+            print ("StandardEngineTimerInterval: \(timerInterval)")
             if (refreshRate != 0 ){
                 timerInterval = 1/refreshRate
             }
+            print ("StandardEngineRefreshRate: \(refreshRate)")
         }
     }
 
@@ -63,26 +71,24 @@ public class StandardEngine: EngineProtocol {
     
     var timerInterval: TimeInterval = 1.0 {
         didSet {
-            if timerInterval > 0.0 {
-                refreshTimer = Timer.scheduledTimer(
-                    withTimeInterval: timerInterval,
-                    repeats: true
-                ) { (t: Timer) in
-                    _ = self.step()
+            if (refreshTimer != nil && timerInterval > 0.0) {
+                refreshTimer = Timer.scheduledTimer(withTimeInterval: timerInterval,
+                                                    repeats: true) { (t: Timer) in
+                                                        _ = self.step()
                 }
-            }
-            else {
-                stopTimer()
             }
         }
     }
+
     
     public func stopTimer () {
+        print ("StandardEngine: StopTimer")
         refreshTimer?.invalidate()
         refreshTimer = nil
     }
     
     public func startTimer() {
+        print ("StandardEngine: StartTimer")
         if (timerInterval > 0.0) {
             refreshTimer = Timer.scheduledTimer(withTimeInterval: timerInterval,
                                                 repeats: true) { (t: Timer) in
