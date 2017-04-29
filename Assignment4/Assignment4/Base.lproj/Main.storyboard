@@ -127,6 +127,7 @@
                         <outlet property="gridRefreshRate" destination="gsL-IF-1UJ" id="Qj8-lH-4QH"/>
                         <outlet property="gridSizeBox" destination="mLR-Lc-fBR" id="qhq-X5-vv7"/>
                         <outlet property="gridSizeStepper" destination="R3p-aa-Kgw" id="2EY-sD-nJS"/>
+                        <outlet property="runSwitch" destination="Sxf-dd-qwb" id="x3X-Hk-DVn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" userLabel="Instrumentation" sceneMemberID="firstResponder"/>

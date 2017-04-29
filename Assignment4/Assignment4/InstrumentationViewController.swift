@@ -14,9 +14,11 @@ class InstrumentationViewController: UIViewController {
     @IBOutlet weak var gridSizeBox: UITextField!
     @IBOutlet weak var gridSizeStepper: UIStepper!
     @IBOutlet weak var gridRefreshRate: UISlider!
+    @IBOutlet weak var runSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        runSwitch.setOn(false, animated: false)
       //  gridRefreshRate.setMax
        // gridRefreshRate.setMin
        // gridSizeStepper.set
@@ -39,7 +41,7 @@ class InstrumentationViewController: UIViewController {
     @IBAction func updateRefreshRate(_ sender: UISlider) {
         let name = Notification.Name(rawValue: "InstrumentationRefreshRate")
         let n = Notification(name: name,
-                             object: (sender.value * 10 + 1),
+                             object: (sender.value * 9 + 1),
                              userInfo: ["InstrumentationRefreshRate" : sender])
         nc.post(n)
     }

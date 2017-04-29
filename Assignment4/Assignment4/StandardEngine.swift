@@ -72,6 +72,7 @@ public class StandardEngine: EngineProtocol {
     var timerInterval: TimeInterval = 1.0 {
         didSet {
             if (refreshTimer != nil && timerInterval > 0.0) {
+                refreshTimer?.invalidate()
                 refreshTimer = Timer.scheduledTimer(withTimeInterval: timerInterval,
                                                     repeats: true) { (t: Timer) in
                                                         _ = self.step()
