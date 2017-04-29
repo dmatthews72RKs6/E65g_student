@@ -29,12 +29,17 @@ class GridView: UIView {
     
     override func draw(_ rect: CGRect) {
         
+        if (gridSize !=  (gridDataSource?.size)! ) {
+            print ("GridView got a new Grid Size: \((gridDataSource?.size)!)")
+        }
+        
+        gridSize = (gridDataSource?.size)!
+
         let cellSize = CGSize (
             width: rect.size.width / CGFloat(gridSize),
             height: rect.size.height / CGFloat(gridSize)
         )
-        gridSize = (gridDataSource?.size)!
-
+       
         // draw the circles
         (0 ..< gridSize).forEach { i in
             (0 ..< gridSize).forEach { j in

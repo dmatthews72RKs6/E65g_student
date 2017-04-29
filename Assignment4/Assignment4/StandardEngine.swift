@@ -43,6 +43,7 @@ public class StandardEngine: EngineProtocol {
 
     public var size: Int = 10 {
         didSet {
+            print ("StandardEngine changed Grid Size \(size)")
             self.grid = Grid.init (size,size)
             delegate?.engineDidUpdate(withGrid: self.grid)
             

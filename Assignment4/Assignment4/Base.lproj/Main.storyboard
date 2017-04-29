@@ -57,11 +57,14 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="textChangeGridSize:" destination="9pv-A4-QxB" eventType="editingDidEnd" id="zkH-Hv-659"/>
+                                        </connections>
                                     </textField>
                                     <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="R3p-aa-Kgw">
                                         <rect key="frame" x="194" y="71" width="94" height="29"/>
                                         <connections>
-                                            <action selector="changeGridSize:" destination="9pv-A4-QxB" eventType="valueChanged" id="LSr-Fs-mc1"/>
+                                            <action selector="stepperChangeGridSize:" destination="9pv-A4-QxB" eventType="valueChanged" id="jiJ-80-Fnd"/>
                                         </connections>
                                     </stepper>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grid Size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3pP-lR-61S">

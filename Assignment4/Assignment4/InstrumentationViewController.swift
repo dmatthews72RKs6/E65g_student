@@ -15,14 +15,17 @@ class InstrumentationViewController: UIViewController {
     @IBOutlet weak var gridSizeStepper: UIStepper!
     @IBOutlet weak var gridRefreshRate: UISlider!
     @IBOutlet weak var runSwitch: UISwitch!
+    let runSimNS = Notification.Name(rawValue: "InstrumentationRunSim")
+    let refreshRateNS = Notification.Name(rawValue: "InstrumentationRefreshRate")
+    let gridSizeNS = Notification.Name(rawValue: "InstrumentationGridSize")
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         runSwitch.setOn(false, animated: false)
-      //  gridRefreshRate.setMax
-       // gridRefreshRate.setMin
-       // gridSizeStepper.set
-        // Do any additional setup after loading the view, typically from a nib.
+        gridSizeStepper.stepValue = 10
+        gridSizeStepper.value = 1
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,30 +34,63 @@ class InstrumentationViewController: UIViewController {
     }
    
     @IBAction func runSimulationSwitch(_ sender: UISwitch) {
-        let name = Notification.Name(rawValue: "InstrumentationRunSim")
-        let n = Notification(name: name,
+        let n = Notification(name: runSimNS,
                              object: sender.isOn,
                              userInfo: ["InstrumentationRunSim" : sender])
         nc.post(n)
     }
     
     @IBAction func updateRefreshRate(_ sender: UISlider) {
-        let name = Notification.Name(rawValue: "InstrumentationRefreshRate")
-        let n = Notification(name: name,
+        
+        let n = Notification(name: refreshRateNS,
                              object: (sender.value * 9 + 1),
                              userInfo: ["InstrumentationRefreshRate" : sender])
         nc.post(n)
     }
     
-    @IBAction func changeGridSize(_ sender: UIStepper) {
-        let newSize = Int(sender.value * 10)
-        let name = Notification.Name(rawValue: "InstrumentationGridSize")
-        let n = Notification(name: name,
-                             object: newSize,
-                             userInfo: ["InstrumentationGridSize" : sender])
-        nc.post(n)
-        gridSizeBox.text = ("\(StandardEngine.engine.size)")
+  
+    @IBAction func stepperChangeGridSize(_ sender: UIStepper) {
+        let val = Int(sender.value)
+        changeGridSize(val)
     }
 
+    @IBAction func textChangeGridSize(_ sender: UITextField) {
+        guard let text = sender.text else { return }
+        guard let val = Int(text) else {
+            showErrorAlert(withMessage: "Invalid value: \(text), please try again.") {
+                sender.text = self.gridSizeBox.text
+            }
+            return
+        }
+        changeGridSize(val)
+
+    }
+    
+    func changeGridSize (_ size: Int) {
+       
+        let n = Notification(name: gridSizeNS,
+                             object: size,
+                             userInfo: ["InstrumentationGridSize" : size])
+        nc.post(n)
+        print ("Instrumentation changed Grid Size \(size)")
+        gridSizeBox.text = ("\(size)")
+        gridSizeStepper.
+
+    }
+    
+    //MARK: AlertController Handling
+    func showErrorAlert(withMessage msg: String, action: (() -> Void)? ) {
+        let alert = UIAlertController(
+            title: "Alert",
+            message: msg,
+            preferredStyle: .alert
+        )
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            alert.dismiss(animated: true) { }
+            OperationQueue.main.addOperation { action?() }
+        }
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 

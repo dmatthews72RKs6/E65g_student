@@ -27,6 +27,7 @@ class SimulationViewController: UIViewController, GridViewDataSource {
              return StandardEngine.engine.size
         }
         set {
+            print ("Simulation changed Grid Size \(size)")
             StandardEngine.engine.size = size
         }
        
@@ -66,6 +67,7 @@ class SimulationViewController: UIViewController, GridViewDataSource {
         gridSize.addObserver (forName: gridSizeName,
                               object: nil,
                               queue: nil) { (n) in
+                                print ("SimulationViewController Recieved a new NS ")
                                 self.engine.size = (n.object as? Int)!
                             }
         }
