@@ -68,7 +68,11 @@ class InstrumentationViewController: UIViewController {
     }
     
     func changeGridSize (_ size: Int) {
-       
+        var size = size
+        
+        if( size <= 0 ){
+            size = 1
+        }
         let n = Notification(name: gridSizeNS,
                              object: size,
                              userInfo: ["InstrumentationGridSize" : size])

@@ -62,7 +62,8 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
                         object: nil,
                         queue: nil) { (n) in
                            self.engine.runSim = (n.object as? Bool)!
-                            
+        }
+        
         let gridSize = NotificationCenter.default
         let gridSizeName = Notification.Name(rawValue: "InstrumentationGridSize")
         gridSize.addObserver (forName: gridSizeName,
@@ -71,7 +72,7 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
                                 print ("SimulationViewController Recieved a new NS ")
                                 self.engine.size = (n.object as? Int)!
                             }
-        }
+    
         let refreshRate = NotificationCenter.default
         let refreshRateName = Notification.Name(rawValue: "InstrumentationRefreshRate")
         refreshRate.addObserver (forName: refreshRateName,
