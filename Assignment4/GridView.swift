@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol GridViewDataSource {
-    subscript (row: Int, col: Int) -> CellState { get set }
+    subscript (row: Int, col: Int) -> CellState { get }
     var size: Int { get set }
 }
 
@@ -19,10 +19,10 @@ class GridView: UIView {
 
     
     var gridDataSource: GridViewDataSource?
+    var emptyColor = UIColor.clear
     var livingColor = UIColor.green
-    var emptyColor = UIColor.lightGray
-    var bornColor = UIColor.cyan
-    var diedColor = UIColor.black
+    var bornColor = UIColor.green.withAlphaComponent(0.3)
+    var diedColor = UIColor.black.withAlphaComponent(0.5)
     var gridColor = UIColor.black
     var gridWidth: CGFloat = 2.0
     var gridSize: Int = 10
@@ -34,6 +34,15 @@ class GridView: UIView {
         }
         
         gridSize = (gridDataSource?.size)!
+        
+        if (gridSize >= 40) {
+            gridWidth = 0.5
+            gridColor = gridColor.withAlphaComponent(0.2)
+        }
+        else {
+            gridWidth = 2.0
+            gridColor = gridColor.withAlphaComponent(1)
+        }
 
         let cellSize = CGSize (
             width: rect.size.width / CGFloat(gridSize),
@@ -128,7 +137,7 @@ class GridView: UIView {
         
        
         let newCellState = (gridDataSource?[pos.row, pos.col].toggle)!
-               gridDataSource?[pos.row, pos.col] = newCellState
+               StandardEngine.engine.grid[pos.row, pos.col] = newCellState
         
         setNeedsDisplay()
         return pos

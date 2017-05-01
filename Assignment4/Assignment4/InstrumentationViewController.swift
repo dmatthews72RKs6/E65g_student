@@ -21,10 +21,11 @@ class InstrumentationViewController: UIViewController {
     
     
     override func viewDidLoad() {
+        print ("InstrumentationViewController Loaded")
         super.viewDidLoad()
         runSwitch.setOn(false, animated: false)
         gridSizeStepper.stepValue = 10
-        gridSizeStepper.value = 1
+        gridSizeStepper.value = 10
         
     }
 
@@ -74,7 +75,7 @@ class InstrumentationViewController: UIViewController {
         nc.post(n)
         print ("Instrumentation changed Grid Size \(size)")
         gridSizeBox.text = ("\(size)")
-        gridSizeStepper.
+        gridSizeStepper.value = Double(size)
 
     }
     

@@ -14,7 +14,7 @@ public protocol EngineDelegate {
 
 public protocol EngineProtocol {
     var delegate: EngineDelegate? { get set }
-    var grid: GridProtocol { get set }
+    var grid: GridProtocol { get }
     var refreshRate: Double { get set }
     var refreshTimer: Timer? { get set }
     var size: Int { get set}
@@ -118,6 +118,7 @@ public class StandardEngine: EngineProtocol {
     }
     
     public func step() -> GridProtocol {
+            print ("Stepped")
             let newGrid = grid.next()
             grid = newGrid
             updateClosure?(self.grid as! Grid)

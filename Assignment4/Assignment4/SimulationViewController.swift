@@ -8,10 +8,9 @@
 
 import UIKit
 
-class SimulationViewController: UIViewController, GridViewDataSource {
+class SimulationViewController: UIViewController, GridViewDataSource, EngineDelegate {
     subscript(row: Int, col: Int) -> CellState {
         get { return engine.grid[row,col]  }
-        set { engine.grid[row,col] = newValue }
     }
     
     
@@ -37,22 +36,24 @@ class SimulationViewController: UIViewController, GridViewDataSource {
    
    
     override func viewDidLoad() {
+        print ("SimulationViewController Loaded")
         super.viewDidLoad()
         engine = StandardEngine.engine
-        engine.delegate = self as? EngineDelegate
         gridView.gridDataSource = self as GridViewDataSource
+        engine.delegate = self
+ 
         
         
         
-        // for updating the grid on the screen
-        let nc = NotificationCenter.default
-        let ncname = Notification.Name(rawValue: "EngineUpdate")
-        nc.addObserver(
-            forName: ncname,
-            object: nil,
-            queue: nil) { (n) in
-                self.gridView.setNeedsDisplay()
-        }
+//        // for updating the grid on the screen
+//        let nc = NotificationCenter.default
+//        let ncname = Notification.Name(rawValue: "EngineUpdate")
+//        nc.addObserver(
+//            forName: ncname,
+//            object: nil,
+//            queue: nil) { (n) in
+//                self.gridView.setNeedsDisplay()
+//        }
         
         // do we run the timer?
         let rs = NotificationCenter.default
