@@ -133,6 +133,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="9pv-A4-QxB" id="FEX-iS-AgM"/>
+                                    <outlet property="delegate" destination="9pv-A4-QxB" id="49o-De-8Jd"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.36035667539999999" green="0.10408344579999999" blue="0.87508173978053694" alpha="1" colorSpace="calibratedRGB"/>
@@ -159,6 +163,7 @@
                         <outlet property="gridSizeBox" destination="mLR-Lc-fBR" id="qhq-X5-vv7"/>
                         <outlet property="gridSizeStepper" destination="R3p-aa-Kgw" id="2EY-sD-nJS"/>
                         <outlet property="runSwitch" destination="Sxf-dd-qwb" id="x3X-Hk-DVn"/>
+                        <outlet property="tableView" destination="28E-6r-GfJ" id="sE6-WZ-cic"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" userLabel="Instrumentation" sceneMemberID="firstResponder"/>

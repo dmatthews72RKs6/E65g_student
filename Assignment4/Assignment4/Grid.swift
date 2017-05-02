@@ -71,6 +71,8 @@ extension GridProtocol {
     }
     
     public func next() -> Self {
+        print ("Grid.Swift got a new grid via internal method")
+        
         var nextGrid = Self(size.rows, size.cols) { _, _ in .empty }
         lazyPositions(self.size).forEach { nextGrid[$0.row, $0.col] = self.nextState(of: $0) }
         return nextGrid
@@ -91,6 +93,22 @@ public struct Grid: GridProtocol {
         _cells = [[CellState]](repeatElement( [CellState](repeatElement(.empty, count: rows)), count: cols))
         size = GridSize(rows, cols)
         lazyPositions(self.size).forEach { self[$0.row, $0.col] = cellInitializer($0) }
+    }
+    public init (cellsOn: [[Int]]) {
+        var maxVal: Int = cellsOn.reduce(0){
+            let prevMax = $0
+            let subMax: Int = $1.reduce(0) {
+                return ($1 > $0) ? $1: $0
+            }
+            return (subMax > prevMax) ? subMax: prevMax
+        }
+        
+        maxVal *= 2
+        size = GridSize (maxVal, maxVal)
+        _cells = [[CellState]](repeatElement( [CellState](repeatElement(.empty, count: size.rows)), count: size.cols))
+        cellsOn.forEach {
+            self[$0[0], $0[1]] = CellState.alive
+        }
     }
 }
 
@@ -132,6 +150,7 @@ extension Grid: Sequence {
         }
         
         public mutating func next() -> GridProtocol? {
+            print ("Grid.Swift got a new grid via gridProtocol")
             if history.hasCycle { return nil }
             let newGrid:Grid = grid.next() as! Grid
             history = GridHistory(newGrid.living, history)

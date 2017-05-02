@@ -39,8 +39,6 @@ public class StandardEngine: EngineProtocol {
 
 
     
-    // public var delegate: EngineDelegate?
-
     public var size: Int = 10 {
         didSet {
             print ("StandardEngine changed Grid Size \(size)")
@@ -50,7 +48,19 @@ public class StandardEngine: EngineProtocol {
         }
     }
 
-    public var grid: GridProtocol
+    public var grid: GridProtocol {
+        didSet {
+            print( "gridChanged")
+            print (grid.description)
+            let nc = NotificationCenter.default
+            let name = Notification.Name(rawValue: "EngineUpdate")
+            let n = Notification(name: name,
+                                 object: nil,
+                                 userInfo: ["engine" : self])
+            nc.post(n)
+            
+        }
+    }
     
     public var refreshRate: Double = 0 {
         didSet {
@@ -120,15 +130,14 @@ public class StandardEngine: EngineProtocol {
     public func step() -> GridProtocol {
             print ("Stepped")
             let newGrid = grid.next()
-            grid = newGrid
+                grid = newGrid
             updateClosure?(self.grid as! Grid)
-            delegate?.engineDidUpdate(withGrid: grid)
         
         
             let nc = NotificationCenter.default
             let name = Notification.Name(rawValue: "EngineUpdate")
             let n = Notification(name: name,
-                                 object: nil,
+                                 object: grid,
                                  userInfo: ["engine" : self])
                                  nc.post(n)
             return grid

@@ -40,45 +40,18 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
         super.viewDidLoad()
         engine = StandardEngine.engine
         gridView.gridDataSource = self as GridViewDataSource
-        engine.delegate = self
  
         
         
         
-//        // for updating the grid on the screen
-//        let nc = NotificationCenter.default
-//        let ncname = Notification.Name(rawValue: "EngineUpdate")
-//        nc.addObserver(
-//            forName: ncname,
-//            object: nil,
-//            queue: nil) { (n) in
-//                self.gridView.setNeedsDisplay()
-//        }
-        
-        // do we run the timer?
-        let rs = NotificationCenter.default
-        let rsname = Notification.Name(rawValue: "InstrumentationRunSim")
-        rs.addObserver (forName: rsname,
-                        object: nil,
-                        queue: nil) { (n) in
-                           self.engine.runSim = (n.object as? Bool)!
-        }
-        
-        let gridSize = NotificationCenter.default
-        let gridSizeName = Notification.Name(rawValue: "InstrumentationGridSize")
-        gridSize.addObserver (forName: gridSizeName,
-                              object: nil,
-                              queue: nil) { (n) in
-                                print ("SimulationViewController Recieved a new NS ")
-                                self.engine.size = (n.object as? Int)!
-                            }
-    
-        let refreshRate = NotificationCenter.default
-        let refreshRateName = Notification.Name(rawValue: "InstrumentationRefreshRate")
-        refreshRate.addObserver (forName: refreshRateName,
-                              object: nil,
-                              queue: nil) { (n) in
-                                self.engine.refreshRate = Double((n.object as? Float)!)
+        // for updating the grid on the screen
+        let nc = NotificationCenter.default
+        let ncname = Notification.Name(rawValue: "EngineUpdate")
+        nc.addObserver(
+            forName: ncname,
+            object: nil,
+            queue: nil) { (n) in
+                self.gridView.setNeedsDisplay()
         }
     }
     
