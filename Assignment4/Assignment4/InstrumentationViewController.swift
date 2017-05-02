@@ -97,28 +97,35 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         let label = cell.contentView.subviews.first as! UILabel
         label.text = jsonGrids[indexPath.item][0] as? String
-        print (label.text!)
-        
         return cell
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Grids"
     }
-//    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let indexPath = tableView.indexPathForSelectedRow
-//        if let indexPath = indexPath {
-//            let fruitValue = jsonGrids[indexPath.section][indexPath.row]
-////            if let vc = segue.destination as? GridEditorViewController {
-////                vc.fruitValue = fruitValue
-////                vc.saveClosure = { newValue in
-////                    data[indexPath.section][indexPath.row] = newValue
-////                    self.tableView.reloadData()
-////                }
-////            }
-//        }
-//    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let indexPath = tableView.indexPathForSelectedRow
+        print ("let indexPath = tableView.indexPathForSelectedRow")
+        if let indexPath = indexPath {
+            let grid = Grid(cellsOn: jsonGrids[indexPath.item][1] as! [[Int]])
+            print ("got grid")
+            if let vc = segue.destination as? GridEditorViewController {
+                print ("Entering seque.destination")
+                vc.engine = StandardEngine.init(grid: grid)
+                print ("set grid")
+                vc.gridName = jsonGrids[indexPath.item][0] as? String
+                print ("print set grid name")
+                vc.saveClosure = { newValue in
+                    self.jsonGrids[indexPath.item][0] = vc.gridTitle.text
+                    StandardEngine.engine.grid = (vc.engine.grid)
+                    self.tableView.reloadData()
+                }
+                print ("set grid save closure")
+            }
+        }
+    }
     
     //MARK: fetching JSON
     func fetchJSON() {
@@ -146,8 +153,6 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
            
             OperationQueue.main.addOperation {
                 self.tableView.reloadData()
-                print (self.jsonGrids)
-                
             }
         }
     }

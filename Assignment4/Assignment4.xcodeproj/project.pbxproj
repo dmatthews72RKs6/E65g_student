@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6316114A1EB8D73700886E72 /* GridEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631611491EB8D73700886E72 /* GridEditorViewController.swift */; };
 		63B35A661EB7EA280003BF40 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B35A651EB7EA280003BF40 /* Fetcher.swift */; };
 		63FFB49B1EA7B9010095DD54 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FFB49A1EA7B9010095DD54 /* StatisticsViewController.swift */; };
 		63FFB49D1EA7BC2C0095DD54 /* StandardEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FFB49C1EA7BC2C0095DD54 /* StandardEngine.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		631611491EB8D73700886E72 /* GridEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridEditorViewController.swift; sourceTree = "<group>"; };
 		63B35A651EB7EA280003BF40 /* Fetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fetcher.swift; path = ../Fetcher.swift; sourceTree = "<group>"; };
 		63FFB49A1EA7B9010095DD54 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatisticsViewController.swift; path = ../StatisticsViewController.swift; sourceTree = "<group>"; };
 		63FFB49C1EA7BC2C0095DD54 /* StandardEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardEngine.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 		FBAD2E051E2BE38C008207C0 /* Assignment4 */ = {
 			isa = PBXGroup;
 			children = (
+				631611491EB8D73700886E72 /* GridEditorViewController.swift */,
 				FBAD2E061E2BE38C008207C0 /* AppDelegate.swift */,
 				FBAD2E081E2BE38C008207C0 /* InstrumentationViewController.swift */,
 				63B35A651EB7EA280003BF40 /* Fetcher.swift */,
@@ -155,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6316114A1EB8D73700886E72 /* GridEditorViewController.swift in Sources */,
 				FBAD2E0B1E2BE38C008207C0 /* SimulationViewController.swift in Sources */,
 				63B35A661EB7EA280003BF40 /* Fetcher.swift in Sources */,
 				63FFB49B1EA7B9010095DD54 /* StatisticsViewController.swift in Sources */,

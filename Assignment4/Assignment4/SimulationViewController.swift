@@ -11,6 +11,7 @@ import UIKit
 class SimulationViewController: UIViewController, GridViewDataSource, EngineDelegate {
     subscript(row: Int, col: Int) -> CellState {
         get { return engine.grid[row,col]  }
+        set { engine.grid[row,col] = newValue}
     }
     
     

@@ -14,7 +14,7 @@ public protocol EngineDelegate {
 
 public protocol EngineProtocol {
     var delegate: EngineDelegate? { get set }
-    var grid: GridProtocol { get }
+    var grid: GridProtocol { get set }
     var refreshRate: Double { get set }
     var refreshTimer: Timer? { get set }
     var size: Int { get set}
@@ -61,6 +61,8 @@ public class StandardEngine: EngineProtocol {
             
         }
     }
+    
+    
     
     public var refreshRate: Double = 0 {
         didSet {
@@ -114,7 +116,7 @@ public class StandardEngine: EngineProtocol {
         self.grid = Grid.init(rows, cols)
         self.size = rows
         self.refreshTimer = nil
-        
+
         // publish new grid
         let nc = NotificationCenter.default
         let name = Notification.Name(rawValue: "EngineUpdate")
@@ -122,9 +124,24 @@ public class StandardEngine: EngineProtocol {
                              object: nil,
                              userInfo: ["engine" : self])
         nc.post(n)
-        
+
         self.delegate = {} as? EngineDelegate
-        
+    }
+    
+    public init (grid: Grid) {
+        self.grid = grid
+        self.size = grid.size.cols
+        print ("standardEnging: self.size: \(self.size)")
+        self.refreshTimer = nil
+
+        // publish new grid
+        let nc = NotificationCenter.default
+        let name = Notification.Name(rawValue: "EngineUpdate")
+        let n = Notification(name: name,
+                             object: nil,
+                             userInfo: ["engine" : self])
+        nc.post(n)
+        self.delegate = {} as? EngineDelegate
     }
     
     public func step() -> GridProtocol {

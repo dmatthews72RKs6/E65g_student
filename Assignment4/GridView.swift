@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol GridViewDataSource {
-    subscript (row: Int, col: Int) -> CellState { get }
+    subscript (row: Int, col: Int) -> CellState { get set }
     var size: Int { get set }
 }
 
@@ -28,7 +28,7 @@ class GridView: UIView {
     var gridSize: Int = 10
     
     override func draw(_ rect: CGRect) {
-        
+        print ("starting draw")
         if (gridSize !=  (gridDataSource?.size)! ) {
             print ("GridView got a new Grid Size: \((gridDataSource?.size)!)")
         }
@@ -137,7 +137,7 @@ class GridView: UIView {
         
        
         let newCellState = (gridDataSource?[pos.row, pos.col].toggle)!
-               StandardEngine.engine.grid[pos.row, pos.col] = newCellState
+        gridDataSource?[pos.row, pos.col] = newCellState
         
         setNeedsDisplay()
         return pos
