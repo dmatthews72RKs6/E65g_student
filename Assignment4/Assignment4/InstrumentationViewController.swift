@@ -9,7 +9,6 @@
 import UIKit
 
 class InstrumentationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    let nc = NotificationCenter.default
     
     @IBOutlet weak var gridSizeBox: UITextField!
     @IBOutlet weak var gridSizeStepper: UIStepper!
@@ -18,13 +17,11 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
     @IBOutlet weak var tableView: UITableView!
     
     let finalProjectURL = "https://dl.dropboxusercontent.com/u/7544475/S65g.json"
-    let runSimNS = Notification.Name(rawValue: "InstrumentationRunSim")
-    let refreshRateNS = Notification.Name(rawValue: "InstrumentationRefreshRate")
-    let gridSizeNS = Notification.Name(rawValue: "InstrumentationGridSize")
-    private var jsonGrids: [storedGrid] = []
+    private var jsonGrids: [StoredGrid] = []
     private var engine = StandardEngine.engine
     
-    private struct storedGrid {
+    // For storing a name associated with an engine for user recall
+    private struct StoredGrid {
         var engine: StandardEngine
         var name: String
         
@@ -37,19 +34,34 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
             self.name = name
             engine = StandardEngine(grid: Grid(10, 10))
         }
-    }
-    @IBAction func addStoredGrid(_ sender: UIButton) {
-        jsonGrids.append(storedGrid(name: "Untitled"))
-        self.tableView.reloadData()
+        public init (name: String, grid: Grid){
+            self.name = name
+            engine = StandardEngine(grid: grid)
+        }
     }
     
+    
     override func viewDidLoad() {
-        print ("InstrumentationViewController Loaded")
         super.viewDidLoad()
         runSwitch.setOn(false, animated: false)
         gridSizeStepper.stepValue = 10
+        gridSizeStepper.maximumValue = 200
         gridSizeStepper.value = 10
+        
+        // downloads and parses the JSON, then updates the Table View
         fetchJSON()
+        
+        // Adds grids which are desired to be saved to the Table View
+        let nc = NotificationCenter.default
+        let name = Notification.Name(rawValue: "SaveGrid")
+        nc.addObserver(forName: name, object: nil, queue: nil) { (n) in
+            if let grid = n.object as? (Grid, String) {
+                self.jsonGrids.append(StoredGrid(name: grid.1, grid: grid.0))
+                self.tableView.reloadData()
+            }
+
+        }
+    
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,20 +69,33 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
         // Dispose of any resources that can be recreated.
     }
     
+    
+    //MARK: User Interface actions
+    
+    // Adds a new 
+    @IBAction func addStoredGrid(_ sender: UIButton) {
+        jsonGrids.append(StoredGrid(name: "Untitled"))
+        self.tableView.reloadData()
+    }
+    
+    // Starts simulating the grid
     @IBAction func runSimulationSwitch(_ sender: UISwitch) {
         engine.runSim = sender.isOn
     }
     
+    // Sets the speed of simulation when engine.runSim == true
     @IBAction func updateRefreshRate(_ sender: UISlider) {
        engine.refreshRate = (Double(sender.value * 9) + 1.0)
     }
     
   
+    // updates the size of the grid as edited by the user through the stepper
     @IBAction func stepperChangeGridSize(_ sender: UIStepper) {
         let val = Int(sender.value)
         changeGridSize(val)
     }
 
+    // updates the size of the grid as edited by the user through the TextField
     @IBAction func textChangeGridSize(_ sender: UITextField) {
         guard let text = sender.text else { return }
         guard let val = Int(text) else {
@@ -80,9 +105,10 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
             return
         }
         changeGridSize(val)
-
     }
     
+    
+    // helper method for changing the size of the grid. This method syncs up the stepper and the TextView, and informs the StandardEngine to update.
     func changeGridSize (_ size: Int) {
         var size = size
         
@@ -121,14 +147,15 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
     }
 
     
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let indexPath = tableView.indexPathForSelectedRow
         if let indexPath = indexPath {
             if let vc = segue.destination as? GridEditorViewController {
                 vc.engine = jsonGrids[indexPath.item].engine
                 vc.gridName = jsonGrids[indexPath.item].name
+                gridSizeBox.text = ("\(vc.engine.size)")
+                gridSizeStepper.value = Double(vc.engine.size)
+                
                 vc.saveClosure = { newValue in
                     self.jsonGrids[indexPath.item].name = vc.gridTitle.text!
                     self.jsonGrids[indexPath.item].engine = vc.engine
@@ -136,7 +163,6 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
                     self.engine.grid = vc.engine.grid
                     self.tableView.reloadData()
                 }
-                print ("set grid save closure")
             }
         }
     }
@@ -169,7 +195,7 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
                 let dict = dictionary as! NSDictionary
                 let title = dict["title"] as! String
                 let contents = dict["contents"] as! [[Int]]
-                self.jsonGrids.append(storedGrid(name: title, cellsOn: contents))
+                self.jsonGrids.append(StoredGrid(name: title, cellsOn: contents))
             }
             
            

@@ -54,6 +54,7 @@ class Fetcher: NSObject, URLSessionDelegate {
         }
     }
 
+    
     typealias FetchCompletionHandler = (_ result: EitherOr) -> Void
     func fetch(url: URL, completion: @escaping FetchCompletionHandler) {
         let task = session().dataTask(with: url) {

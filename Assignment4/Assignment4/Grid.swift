@@ -6,6 +6,7 @@ public typealias GridSize = (rows: Int, cols: Int)
 
 fileprivate func norm(_ val: Int, to size: Int) -> Int { return ((val % size) + size) % size }
 
+// Stores the states of the cells, and aids in toggling them on user presses.
 public enum CellState {
     case alive, empty, born, died
     
@@ -31,9 +32,18 @@ public protocol GridProtocol {
     var description: String { get }
     var size: GridSize { get }
     subscript (row: Int, col: Int) -> CellState { get set }
-    func next() -> Self 
+    func next() -> Self
+    func numInState (state: CellState) -> Int
+    
 }
 
+//public protocol GridStats {
+//    
+//}
+//
+//
+//extension GridStats {
+//  }
 public let lazyPositions = { (size: GridSize) in
     return (0 ..< size.rows)
         .lazy
@@ -42,7 +52,7 @@ public let lazyPositions = { (size: GridSize) in
         .map { GridPosition($0) }
 }
 
-
+// relative positions of the neighbors of a cell
 let offsets: [GridPosition] = [
     (row: -1, col:  -1), (row: -1, col:  0), (row: -1, col:  1),
     (row:  0, col:  -1),                     (row:  0, col:  1),
@@ -50,16 +60,25 @@ let offsets: [GridPosition] = [
 ]
 
 extension GridProtocol {
+    
+    public func numInState (state: CellState) -> Int {
+        let state: Array = lazyPositions(self.size).filter { return self[$0.row, $0.col] == (state) }
+        return state.count
+    }
+
+    // returns ascii art of the grid.
     public var description: String {
         return lazyPositions(self.size)
             .map { (self[$0.row, $0.col].isAlive ? "*" : " ") + ($0.col == self.size.cols - 1 ? "\n" : "") }
             .joined()
     }
     
+    // returns an array of the CellStates of the adjacent cells to a given cell.
     private func neighborStates(of pos: GridPosition) -> [CellState] {
         return offsets.map { self[pos.row + $0.row, pos.col + $0.col] }
     }
     
+    // Determines the next CellState of a given cell
     private func nextState(of pos: GridPosition) -> CellState {
         let iAmAlive = self[pos.row, pos.col].isAlive
         let numLivingNeighbors = neighborStates(of: pos).filter({ $0.isAlive }).count
@@ -70,9 +89,8 @@ extension GridProtocol {
         }
     }
     
-    public func next() -> Self {
-        print ("Grid.Swift got a new grid via internal method")
-        
+    // Walks through each cell in the grid returning a Grid with each cell at it's next CellState
+    public func next() -> Self { 
         var nextGrid = Self(size.rows, size.cols) { _, _ in .empty }
         lazyPositions(self.size).forEach { nextGrid[$0.row, $0.col] = self.nextState(of: $0) }
         return nextGrid
@@ -83,17 +101,20 @@ extension GridProtocol {
 public struct Grid: GridProtocol {
     private var _cells: [[CellState]]
     public let size: GridSize
-
+    
     public subscript (row: Int, col: Int) -> CellState {
         get { return _cells[norm(row, to: size.rows)][norm(col, to: size.cols)] }
         set { _cells[norm(row, to: size.rows)][norm(col, to: size.cols)] = newValue }
     }
     
+    // Initialises a grid of a certian size and sets their initial CellStates baised on cellInitializer
     public init(_ rows: Int, _ cols: Int, cellInitializer: (GridPosition) -> CellState = { _, _ in .empty }) {
         _cells = [[CellState]](repeatElement( [CellState](repeatElement(.empty, count: rows)), count: cols))
         size = GridSize(rows, cols)
         lazyPositions(self.size).forEach { self[$0.row, $0.col] = cellInitializer($0) }
     }
+    
+    // Initializes a grid out of a set of cells stated to be on.
     public init (cellsOn: [[Int]]) {
         var maxVal: Int = cellsOn.reduce(0){
             let prevMax = $0
@@ -111,63 +132,3 @@ public struct Grid: GridProtocol {
         }
     }
 }
-
-extension Grid: Sequence {
-    fileprivate var living: [GridPosition] {
-        return lazyPositions(self.size).filter { return  self[$0.row, $0.col].isAlive   }
-    }
-    
-    public struct GridIterator: IteratorProtocol {
-        private class GridHistory: Equatable {
-            let positions: [GridPosition]
-            let previous:  GridHistory?
-            
-            static func == (lhs: GridHistory, rhs: GridHistory) -> Bool {
-                return lhs.positions.elementsEqual(rhs.positions, by: ==)
-            }
-            
-            init(_ positions: [GridPosition], _ previous: GridHistory? = nil) {
-                self.positions = positions
-                self.previous = previous
-            }
-            
-            var hasCycle: Bool {
-                var prev = previous
-                while prev != nil {
-                    if self == prev { return true }
-                    prev = prev!.previous
-                }
-                return false
-            }
-        }
-        
-        private var grid: GridProtocol
-        private var history: GridHistory!
-        
-        init(grid: Grid) {
-            self.grid = grid
-            self.history = GridHistory(grid.living)
-        }
-        
-        public mutating func next() -> GridProtocol? {
-            print ("Grid.Swift got a new grid via gridProtocol")
-            if history.hasCycle { return nil }
-            let newGrid:Grid = grid.next() as! Grid
-            history = GridHistory(newGrid.living, history)
-            grid = newGrid
-            return grid
-        }
-    }
-    
-    public func makeIterator() -> GridIterator { return GridIterator(grid: self) }
-}
-
-public extension Grid {
-    public static func gliderInitializer(pos: GridPosition) -> CellState {
-        switch pos {
-        case (0, 1), (1, 2), (2, 0), (2, 1), (2, 2): return .alive
-        default: return .empty
-        }
-    }
-}
-

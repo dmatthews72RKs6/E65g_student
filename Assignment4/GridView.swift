@@ -10,7 +10,7 @@ import UIKit
 
 public protocol GridViewDataSource {
     subscript (row: Int, col: Int) -> CellState { get set }
-    var size: Int { get set }
+    var size: Int { get }
 }
 
 
@@ -28,14 +28,17 @@ class GridView: UIView {
     var gridSize: Int = 10
     
     override func draw(_ rect: CGRect) {
-        print ("starting draw")
-        if (gridSize !=  (gridDataSource?.size)! ) {
-            print ("GridView got a new Grid Size: \((gridDataSource?.size)!)")
-        }
+        // Checking if gridDataSource is attached. If it is not, drawing can not occur.
+        guard gridDataSource != nil else { return }
         
-        gridSize = (gridDataSource?.size)!
+        /**
+         Updating knowlege of size of grid so it can be drawn correctly.
+         */
+        gridSize = gridDataSource!.size
         
-        if (gridSize >= 40) {
+        
+        //MARK: appearance of grid lines for small and large grids
+        if (gridSize >= 30) {
             gridWidth = 0.5
             gridColor = gridColor.withAlphaComponent(0.2)
         }
@@ -44,26 +47,22 @@ class GridView: UIView {
             gridColor = gridColor.withAlphaComponent(1)
         }
 
+        //MARK: calculating the size of each grid cell
         let cellSize = CGSize (
             width: rect.size.width / CGFloat(gridSize),
             height: rect.size.height / CGFloat(gridSize)
         )
        
-        // draw the circles
+        // draw the grid cell circles
         (0 ..< gridSize).forEach { i in
             (0 ..< gridSize).forEach { j in
                 let color: UIColor
                 
-                if let grid = gridDataSource {
-                    switch grid[i, j] {
+                switch gridDataSource![i, j] {
                     case .alive: color = livingColor
                     case .empty: color = emptyColor
                     case .born: color = bornColor
                     case .died: color = diedColor
-                    }
-                }
-                else {
-                    color = UIColor.clear
                 }
                
                 drawCircle(
@@ -91,6 +90,10 @@ class GridView: UIView {
         
     }
     
+    /**
+        Draws a straight line between two points.
+     */
+    
     func drawLine (start: CGPoint, end: CGPoint) {
         let path = UIBezierPath()
         path.lineWidth = gridWidth
@@ -100,6 +103,9 @@ class GridView: UIView {
         path.stroke()
     }
     
+    /**
+        Draws a circle of a specified color and size at a specified location
+     */
     func drawCircle (origin: CGPoint, size: CGSize, color: UIColor) {
         let rect = CGRect(
             origin: origin,
@@ -110,17 +116,30 @@ class GridView: UIView {
         path.fill()
     }
     
+    /**
+        Processes the first touch on the grid and toggles the appropiate cell once
+     */
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         lastTouchedPosition = process(touches: touches)
     }
-    
+
+    /**
+        Processes the middle touches on the grid and toggles the appropiate cell once
+     */
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         lastTouchedPosition = process(touches: touches)
     }
     
+    /**
+        Processes the last touch on the grid and enables the last touched cell to be toggled again.
+     */
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         lastTouchedPosition = nil
     }
+    
+    /**
+        Records the last touched position to avoid toggling a cell multiple times as a user swipes their hand across it.
+    */
     var lastTouchedPosition: GridPosition?
 
     /**
