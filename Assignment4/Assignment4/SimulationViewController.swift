@@ -43,6 +43,12 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
     // resets the grid to every cell being of CellState .empty
     @IBAction func reset(_ sender: UIButton) {
         self.engine.size = self.size
+        let nc = NotificationCenter.default
+        let name = Notification.Name(rawValue: "resetStats")
+        let n = Notification(name: name,
+                             object: nil,
+                             userInfo: ["Simulation" : self])
+        nc.post(n)
     }
     
     // Adds the current grid state to the savedGrids TableView of the InstrumentationView

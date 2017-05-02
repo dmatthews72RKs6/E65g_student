@@ -73,7 +73,7 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
     //MARK: User Interface actions
     
     // Adds a new 
-    @IBAction func addStoredGrid(_ sender: UIButton) {
+    @IBAction func addStoredGrid(_ sender: UIBarButtonItem) {
         jsonGrids.append(StoredGrid(name: "Untitled"))
         self.tableView.reloadData()
     }
@@ -123,7 +123,7 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
     //MARK: TableView DataSource and Delegate
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = false
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -162,6 +162,12 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
                     self.engine.size = vc.engine.size
                     self.engine.grid = vc.engine.grid
                     self.tableView.reloadData()
+                    let nc = NotificationCenter.default
+                    let name = Notification.Name(rawValue: "EngineUpdate")
+                    let n = Notification(name: name,
+                                         object: vc.engine.grid,
+                                         userInfo: ["engine" : self])
+                    nc.post(n)
                 }
             }
         }
