@@ -33,6 +33,14 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
             engine = StandardEngine(grid: Grid(cellsOn: cellsOn))
             
         }
+        public init (name: String) {
+            self.name = name
+            engine = StandardEngine(grid: Grid(10, 10))
+        }
+    }
+    @IBAction func addStoredGrid(_ sender: UIButton) {
+        jsonGrids.append(storedGrid(name: "Untitled"))
+        self.tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -42,8 +50,6 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
         gridSizeStepper.stepValue = 10
         gridSizeStepper.value = 10
         fetchJSON()
-        print (jsonGrids)
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -132,6 +138,14 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
                 }
                 print ("set grid save closure")
             }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            jsonGrids.remove(at: indexPath.item)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.reloadData()
         }
     }
     

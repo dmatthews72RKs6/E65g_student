@@ -25,16 +25,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lKd-3H-zpn" userLabel="Refresh Rate">
-                                <rect key="frame" x="16" y="146" width="288" height="26"/>
+                                <rect key="frame" x="16" y="148" width="288" height="28"/>
                                 <subviews>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="gsL-IF-1UJ">
-                                        <rect key="frame" x="102" y="-1.5" width="188" height="31"/>
+                                        <rect key="frame" x="102" y="-0.5" width="188" height="31"/>
                                         <connections>
                                             <action selector="updateRefreshRate:" destination="9pv-A4-QxB" eventType="valueChanged" id="Id3-j7-73e"/>
                                         </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Refresh rate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ka3-sW-1t1">
-                                        <rect key="frame" x="0.0" y="3" width="94" height="21"/>
+                                        <rect key="frame" x="0.0" y="4" width="94" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -45,13 +45,13 @@
                                     <constraint firstItem="gsL-IF-1UJ" firstAttribute="centerY" secondItem="lKd-3H-zpn" secondAttribute="centerY" id="15j-ad-vvz"/>
                                     <constraint firstAttribute="trailing" secondItem="gsL-IF-1UJ" secondAttribute="trailing" id="9Dq-MT-wCG"/>
                                     <constraint firstItem="ka3-sW-1t1" firstAttribute="centerY" secondItem="lKd-3H-zpn" secondAttribute="centerY" id="DUB-R5-no7"/>
-                                    <constraint firstAttribute="height" constant="26" id="R2i-m1-d3S"/>
+                                    <constraint firstAttribute="height" constant="28" id="R2i-m1-d3S"/>
                                     <constraint firstItem="ka3-sW-1t1" firstAttribute="leading" secondItem="lKd-3H-zpn" secondAttribute="leading" id="wjb-bt-TzI"/>
                                     <constraint firstItem="gsL-IF-1UJ" firstAttribute="leading" secondItem="ka3-sW-1t1" secondAttribute="trailing" constant="10" id="xFh-dy-uur"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4R-LT-mdb" userLabel="Grid Size">
-                                <rect key="frame" x="16" y="110" width="288" height="26"/>
+                                <rect key="frame" x="16" y="112" width="288" height="26"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="10" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mLR-Lc-fBR">
                                         <rect key="frame" x="125.5" y="-1.5" width="37" height="30"/>
@@ -87,16 +87,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aPc-4e-bOf" userLabel="Run Simulation">
-                                <rect key="frame" x="16" y="74" width="288" height="26"/>
+                                <rect key="frame" x="16" y="74" width="288" height="28"/>
                                 <subviews>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sxf-dd-qwb">
-                                        <rect key="frame" x="239" y="-2.5" width="51" height="31"/>
+                                        <rect key="frame" x="239" y="-1.5" width="51" height="31"/>
                                         <connections>
                                             <action selector="runSimulationSwitch:" destination="9pv-A4-QxB" eventType="valueChanged" id="QOM-LT-tp0"/>
                                         </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Run Simulation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3b-Vy-b9o">
-                                        <rect key="frame" x="0.0" y="2.5" width="115" height="21"/>
+                                        <rect key="frame" x="0.0" y="3.5" width="115" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -105,14 +105,14 @@
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="i3b-Vy-b9o" firstAttribute="centerY" secondItem="aPc-4e-bOf" secondAttribute="centerY" id="IJ6-KD-aXM"/>
-                                    <constraint firstAttribute="height" constant="26" id="ILV-pb-zpm"/>
+                                    <constraint firstAttribute="height" constant="28" id="ILV-pb-zpm"/>
                                     <constraint firstItem="i3b-Vy-b9o" firstAttribute="leading" secondItem="aPc-4e-bOf" secondAttribute="leading" id="bLC-7k-vqo"/>
                                     <constraint firstAttribute="trailing" secondItem="Sxf-dd-qwb" secondAttribute="trailing" id="dqc-it-hSv"/>
                                     <constraint firstItem="Sxf-dd-qwb" firstAttribute="centerY" secondItem="aPc-4e-bOf" secondAttribute="centerY" id="pGg-CJ-gxP"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="28E-6r-GfJ">
-                                <rect key="frame" x="0.0" y="182" width="320" height="337"/>
+                                <rect key="frame" x="0.0" y="204" width="320" height="315"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="basic" textLabel="EH3-g5-ziD" style="IBUITableViewCellStyleDefault" id="jqe-8L-Mif">
@@ -141,6 +141,32 @@
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="49o-De-8Jd"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LB9-T6-gFa" userLabel="Add storedgrids">
+                                <rect key="frame" x="16" y="176" width="288" height="28"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jwQ-6d-frC" userLabel="AddStoredGrid">
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="28"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Add">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addStoredGrid:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Kzd-kP-Rue"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="jwQ-6d-frC" secondAttribute="bottom" id="0LU-Ux-v08"/>
+                                    <constraint firstItem="jwQ-6d-frC" firstAttribute="top" secondItem="LB9-T6-gFa" secondAttribute="top" id="Bf3-Z7-eM4"/>
+                                    <constraint firstAttribute="height" constant="28" id="LKi-88-Lme"/>
+                                    <constraint firstAttribute="trailing" secondItem="jwQ-6d-frC" secondAttribute="trailing" id="YNm-Ib-NpV"/>
+                                    <constraint firstAttribute="trailing" secondItem="jwQ-6d-frC" secondAttribute="trailing" id="Zml-8T-VHA"/>
+                                    <constraint firstItem="jwQ-6d-frC" firstAttribute="centerX" secondItem="LB9-T6-gFa" secondAttribute="centerX" id="hXr-qm-JBM"/>
+                                    <constraint firstItem="jwQ-6d-frC" firstAttribute="leading" secondItem="LB9-T6-gFa" secondAttribute="leading" id="n9C-yy-kMS"/>
+                                    <constraint firstItem="jwQ-6d-frC" firstAttribute="leading" secondItem="LB9-T6-gFa" secondAttribute="leading" id="rDF-xw-0cP"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.36035667539999999" green="0.10408344579999999" blue="0.87508173978053694" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -153,10 +179,13 @@
                             <constraint firstAttribute="trailingMargin" secondItem="aPc-4e-bOf" secondAttribute="trailing" id="Ily-1A-stE"/>
                             <constraint firstItem="B4R-LT-mdb" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" id="Prf-ur-Fl0"/>
                             <constraint firstItem="aPc-4e-bOf" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="10" id="Rz6-xi-4TN"/>
+                            <constraint firstItem="28E-6r-GfJ" firstAttribute="top" secondItem="LB9-T6-gFa" secondAttribute="bottom" id="V0W-zl-HQp"/>
+                            <constraint firstItem="LB9-T6-gFa" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" id="YRc-ed-GDK"/>
                             <constraint firstAttribute="trailing" secondItem="28E-6r-GfJ" secondAttribute="trailing" id="jI3-Ck-Ef5"/>
                             <constraint firstItem="28E-6r-GfJ" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="jNF-LX-0l6"/>
-                            <constraint firstItem="28E-6r-GfJ" firstAttribute="top" secondItem="lKd-3H-zpn" secondAttribute="bottom" constant="10" id="qwb-Ti-mRE"/>
+                            <constraint firstItem="LB9-T6-gFa" firstAttribute="trailing" secondItem="tsR-hK-woN" secondAttribute="trailingMargin" id="nC0-em-o8m"/>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="28E-6r-GfJ" secondAttribute="bottom" id="skc-Id-8fn"/>
+                            <constraint firstItem="LB9-T6-gFa" firstAttribute="top" secondItem="lKd-3H-zpn" secondAttribute="bottom" id="tPR-iQ-6SQ"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Instrumentation" image="circle" id="acW-dT-cKf" userLabel="Instrumentation"/>
@@ -171,7 +200,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" userLabel="Instrumentation" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2269" y="-767"/>
+            <point key="canvasLocation" x="2268.75" y="-767.95774647887322"/>
         </scene>
         <!--Grid Editor-->
         <scene sceneID="KM3-oC-7Jb">
