@@ -48,19 +48,7 @@ public class StandardEngine: EngineProtocol {
         }
     }
 
-    public var grid: GridProtocol {
-        didSet {
-            print( "gridChanged")
-            print (grid.description)
-            let nc = NotificationCenter.default
-            let name = Notification.Name(rawValue: "EngineUpdate")
-            let n = Notification(name: name,
-                                 object: nil,
-                                 userInfo: ["engine" : self])
-            nc.post(n)
-            
-        }
-    }
+    public var grid: GridProtocol
     
     
     
@@ -133,14 +121,7 @@ public class StandardEngine: EngineProtocol {
         self.size = grid.size.cols
         print ("standardEnging: self.size: \(self.size)")
         self.refreshTimer = nil
-
-        // publish new grid
-        let nc = NotificationCenter.default
-        let name = Notification.Name(rawValue: "EngineUpdate")
-        let n = Notification(name: name,
-                             object: nil,
-                             userInfo: ["engine" : self])
-        nc.post(n)
+        
         self.delegate = {} as? EngineDelegate
     }
     
@@ -148,7 +129,7 @@ public class StandardEngine: EngineProtocol {
             print ("Stepped")
             let newGrid = grid.next()
                 grid = newGrid
-            updateClosure?(self.grid as! Grid)
+            delegate?.engineDidUpdate(withGrid: self.grid)
         
         
             let nc = NotificationCenter.default

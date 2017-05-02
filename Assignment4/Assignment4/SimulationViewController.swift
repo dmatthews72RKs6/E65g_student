@@ -40,20 +40,8 @@ class SimulationViewController: UIViewController, GridViewDataSource, EngineDele
         print ("SimulationViewController Loaded")
         super.viewDidLoad()
         engine = StandardEngine.engine
+        engine.delegate = self as EngineDelegate
         gridView.gridDataSource = self as GridViewDataSource
- 
-        
-        
-        
-        // for updating the grid on the screen
-        let nc = NotificationCenter.default
-        let ncname = Notification.Name(rawValue: "EngineUpdate")
-        nc.addObserver(
-            forName: ncname,
-            object: nil,
-            queue: nil) { (n) in
-                self.gridView.setNeedsDisplay()
-        }
     }
     
 

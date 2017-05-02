@@ -21,9 +21,19 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
     let runSimNS = Notification.Name(rawValue: "InstrumentationRunSim")
     let refreshRateNS = Notification.Name(rawValue: "InstrumentationRefreshRate")
     let gridSizeNS = Notification.Name(rawValue: "InstrumentationGridSize")
-    var jsonGrids: [[Any]] = []
+    private var jsonGrids: [storedGrid] = []
+    private var engine = StandardEngine.engine
     
-    
+    private struct storedGrid {
+        var engine: StandardEngine
+        var name: String
+        
+        public init (name: String, cellsOn: [[Int]]){
+            self.name = name
+            engine = StandardEngine(grid: Grid(cellsOn: cellsOn))
+            
+        }
+    }
     
     override func viewDidLoad() {
         print ("InstrumentationViewController Loaded")
@@ -42,11 +52,11 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     @IBAction func runSimulationSwitch(_ sender: UISwitch) {
-        StandardEngine.engine.runSim = sender.isOn
+        engine.runSim = sender.isOn
     }
     
     @IBAction func updateRefreshRate(_ sender: UISlider) {
-       StandardEngine.engine.refreshRate = (Double(sender.value * 9) + 1.0)
+       engine.refreshRate = (Double(sender.value * 9) + 1.0)
     }
     
   
@@ -73,7 +83,7 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
         if( size <= 0 ){
             size = 1
         }
-        StandardEngine.engine.size = size
+        engine.size = size
         gridSizeBox.text = ("\(size)")
         gridSizeStepper.value = Double(size)
 
@@ -88,6 +98,10 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
         return 1
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Grids"
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return jsonGrids.count
     }
@@ -96,30 +110,24 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
         let identifier = "basic"
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         let label = cell.contentView.subviews.first as! UILabel
-        label.text = jsonGrids[indexPath.item][0] as? String
+        label.text = jsonGrids[indexPath.item].name
         return cell
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Grids"
-    }
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let indexPath = tableView.indexPathForSelectedRow
-        print ("let indexPath = tableView.indexPathForSelectedRow")
         if let indexPath = indexPath {
-            let grid = Grid(cellsOn: jsonGrids[indexPath.item][1] as! [[Int]])
-            print ("got grid")
             if let vc = segue.destination as? GridEditorViewController {
-                print ("Entering seque.destination")
-                vc.engine = StandardEngine.init(grid: grid)
-                print ("set grid")
-                vc.gridName = jsonGrids[indexPath.item][0] as? String
-                print ("print set grid name")
+                vc.engine = jsonGrids[indexPath.item].engine
+                vc.gridName = jsonGrids[indexPath.item].name
                 vc.saveClosure = { newValue in
-                    self.jsonGrids[indexPath.item][0] = vc.gridTitle.text
-                    StandardEngine.engine.grid = (vc.engine.grid)
+                    self.jsonGrids[indexPath.item].name = vc.gridTitle.text!
+                    self.jsonGrids[indexPath.item].engine = vc.engine
+                    self.engine.size = vc.engine.size
+                    self.engine.grid = vc.engine.grid
                     self.tableView.reloadData()
                 }
                 print ("set grid save closure")
@@ -147,7 +155,7 @@ class InstrumentationViewController: UIViewController, UITableViewDelegate, UITa
                 let dict = dictionary as! NSDictionary
                 let title = dict["title"] as! String
                 let contents = dict["contents"] as! [[Int]]
-                self.jsonGrids.append([title, contents])
+                self.jsonGrids.append(storedGrid(name: title, cellsOn: contents))
             }
             
            
